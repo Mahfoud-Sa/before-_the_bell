@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
-public class CoinPickup : MonoBehaviour
+public class CoinPickupSa : MonoBehaviour
 {
     public int value = 1;
 
