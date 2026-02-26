@@ -102,11 +102,12 @@ public class PlayerHoldGoat3D : MonoBehaviour
 
     void Update()
     {
+
         if (goat != null)
         {
             float distance = Vector3.Distance(holdPoint.position, goat.transform.position);
             Debug.DrawLine(holdPoint.position, goat.transform.position, Color.red);
-            Debug.Log($"Distance to goat '{goat.name}': {distance}");
+            Debug.Log($"Distance to goat '{goat.name}': {distance} , is capable to pick up: {distance > maxDistance}");
         }
     }
 }
