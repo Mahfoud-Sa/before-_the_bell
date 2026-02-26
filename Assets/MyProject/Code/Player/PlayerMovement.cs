@@ -6,71 +6,56 @@ public class PlayerMovement : MonoBehaviour
     private CapsuleCollider coll;
     private SpriteRenderer sprite;
     private Animator anim;
+    public float speed = 5f;
 
-    [Header("Movement")]
+    [SerializeField] private LayerMask jumpableGround;
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float jumpForce = 14f;
-
-    [Header("Ground Check")]
-    [SerializeField] private LayerMask jumpableGround;
 
     private float dirX = 0f;
     private bool _moveRightInput = false;
     private bool _moveLeftInput = false;
 
-    private enum MovementState { idle, running, jumping, falling }
+    private enum MovementState { idle, running, jumping, falling ,cutting}
 
-    private void Awake()
+    private void Start()
     {
         rb = GetComponent<Rigidbody>();
         coll = GetComponent<CapsuleCollider>();
         sprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
-
-        if (rb == null) Debug.LogError("❌ Rigidbody missing!");
-        if (coll == null) Debug.LogError("❌ CapsuleCollider missing!");
-        if (anim == null) Debug.LogError("❌ Animator missing!");
-    }
-
-    private void Start()
-    {
-        rb.constraints = RigidbodyConstraints.FreezeRotation;
-        rb.angularVelocity = Vector3.zero;
-        rb.useGravity = true;
-
-        Debug.Log("✅ Player initialized");
+        if (rb != null)
+        {
+            rb.constraints = RigidbodyConstraints.FreezeRotation;
+            rb.angularVelocity = Vector3.zero;
+        }
     }
 
     private void Update()
     {
-        // RESET INPUT
+
+        float h = 0f;
+        if (MobileInput.moveLeft) h = -1f;
+        if (MobileInput.moveRight)  h = 1f;
+        transform.Translate(new Vector3(h * speed * Time.deltaTime, 0, 0));
         dirX = 0f;
 
-        // MOBILE INPUT
         if (_moveRightInput) dirX = 1f;
         else if (_moveLeftInput) dirX = -1f;
 
-        // KEYBOARD FALLBACK
-        if (dirX == 0f)
-            dirX = Input.GetAxisRaw("Horizontal");
-
-        // APPLY MOVEMENT (3D Rigidbody)
-        rb.linearVelocity = new Vector3(dirX * moveSpeed, rb.linearVelocity.y, 0f);
-
-        // JUMP INPUT
-        if (Input.GetButtonDown("Jump"))
+        if (dirX == 0)
         {
-            Debug.Log("⬆ Jump button pressed");
+            dirX = Input.GetAxisRaw("Horizontal");
+        }
 
-            if (IsGrounded())
-            {
-                Debug.Log("🟢 Grounded → Jump!");
-                PerformJump();
-            }
-            else
-            {
-                Debug.Log("🔴 Not grounded → No jump");
-            }
+        if (rb != null)
+        {
+            rb.linearVelocity = new Vector3(dirX * moveSpeed, rb.linearVelocity.y, 0f);
+        }
+
+        if (Input.GetButtonDown("Jump") && IsGrounded())
+        {
+            PerformJump();
         }
 
         UpdateAnimationState();
@@ -78,12 +63,22 @@ public class PlayerMovement : MonoBehaviour
 
     public void PerformJump()
     {
-        rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpForce, 0f);
+        if (IsGrounded() && rb != null)
+        {
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpForce, 0f);
+        }
     }
 
-    // MOBILE BUTTONS
-    public void PressRight(bool isPressed) => _moveRightInput = isPressed;
-    public void PressLeft(bool isPressed) => _moveLeftInput = isPressed;
+    public void PressRight(bool isPressed)
+    {
+        _moveRightInput = isPressed;
+    }
+
+    public void PressLeft(bool isPressed)
+    {
+        _moveLeftInput = isPressed;
+    }
+
 
     private void UpdateAnimationState()
     {
@@ -104,12 +99,18 @@ public class PlayerMovement : MonoBehaviour
             state = MovementState.idle;
         }
 
-        if (!IsGrounded())
+        bool isGrounded = IsGrounded();
+
+        if (!isGrounded && rb != null)
         {
-            if (rb.linearVelocity.y > 0.1f)
+            if (rb.linearVelocity.y > .1f)
+            {
                 state = MovementState.jumping;
-            else if (rb.linearVelocity.y < -0.1f)
+            }
+            else if (rb.linearVelocity.y < -.1f)
+            {
                 state = MovementState.falling;
+            }
         }
 
         anim.SetInteger("state", (int)state);
@@ -117,32 +118,10 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsGrounded()
     {
+        if (coll == null) return false;
         float extraHeight = 0.1f;
         float distance = coll.bounds.extents.y + extraHeight;
-
-        Vector3 origin = coll.bounds.center;
-
-        bool hit = Physics.Raycast(
-            origin,
-            Vector3.down,
-            distance,
-            jumpableGround
-        );
-
-        // VISUAL DEBUG
-        Debug.DrawRay(
-            origin,
-            Vector3.down * distance,
-            hit ? Color.green : Color.red
-        );
-
-        return hit;
-    }
-    public void PressJump()
-{
-    if (IsGrounded())
-    {
-        PerformJump();
+        return Physics.Raycast(coll.bounds.center, Vector3.down, distance, jumpableGround);
     }
 }
-}
+
