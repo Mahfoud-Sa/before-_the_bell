@@ -5,9 +5,9 @@ public class PlayButtonScript : MonoBehaviour
 {
  public void PlayGame()
     {
-        SceneManager.LoadScene("LevelOne");
+        //SceneManager.LoadScene("LevelOne");
         
         // OR if you prefer using index:
-        // SceneManager.LoadScene(1);
+         SceneManager.LoadScene(1);
     }
 }
