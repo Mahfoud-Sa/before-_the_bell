@@ -1,70 +1,112 @@
 using UnityEngine;
 
-public class PlayerHoldGoat1 : MonoBehaviour
+public class PlayerHoldGoat3D : MonoBehaviour
 {
-   public Transform holdPoint; // Empty object where the goat will be held
-    private GameObject goatNearby;
+    [Header("Settings")]
+    public Transform holdPoint;       // Where the goat will be held
+    public float maxDistance = 2f;    // Max distance to pick up
+    public GameObject goat;           // Assign your single goat in the Inspector
+
     private GameObject heldGoat;
-    private FixedJoint2D holdJoint;
+    private FixedJoint holdJoint;
     private bool isHolding = false;
 
-    void Update()
+    public void PickUpGoat()
     {
-        // Press and hold (space for testing)
-        if (Input.GetKey(KeyCode.Space))
+        if (isHolding)
         {
-            if (!isHolding && goatNearby != null)
-                PickUpGoat();
+            Debug.Log("Already holding a goat.");
+            return;
         }
-        else
+
+        if (goat == null)
         {
-            if (isHolding)
-                DropGoat();
+            Debug.LogWarning("No goat assigned!");
+            return;
         }
-    }
 
-    private void PickUpGoat()
-    {
-        heldGoat = goatNearby;
+        float distance = Vector3.Distance(holdPoint.position, goat.transform.position);
+        Debug.Log($"Distance to goat '{goat.name}': {distance}");
 
-        holdJoint = heldGoat.AddComponent<FixedJoint2D>();
-        holdJoint.connectedBody = GetComponent<Rigidbody2D>();
+        if (distance > maxDistance)
+        {
+            Debug.Log($"Goat '{goat.name}' is too far to pick up (maxDistance = {maxDistance})");
+            return;
+        }
+
+        // Pick up the goat
+        heldGoat = goat;
+
+        // Disable goat movement
+        GoatRandomMovement goatMovement = heldGoat.GetComponent<GoatRandomMovement>();
+        if (goatMovement != null) goatMovement.enabled = false;
+
+        Rigidbody rb = heldGoat.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = true;
+            rb.useGravity = false;
+        }
+
+        // Attach FixedJoint to player
+        holdJoint = heldGoat.AddComponent<FixedJoint>();
+        holdJoint.connectedBody = GetComponent<Rigidbody>();
         holdJoint.autoConfigureConnectedAnchor = false;
+        holdJoint.anchor = heldGoat.transform.InverseTransformPoint(heldGoat.transform.position);
         holdJoint.connectedAnchor = holdPoint.localPosition;
 
-        Rigidbody2D rb = heldGoat.GetComponent<Rigidbody2D>();
-        rb.gravityScale = 0;
-        rb.linearVelocity = Vector2.zero;
-
         isHolding = true;
+        Debug.Log($"Picked up goat '{heldGoat.name}' successfully");
     }
 
-    private void DropGoat()
+    public void DropGoat()
     {
-        if (heldGoat != null)
+        if (!isHolding || heldGoat == null)
         {
-            if (holdJoint != null)
-                Destroy(holdJoint);
-
-            Rigidbody2D rb = heldGoat.GetComponent<Rigidbody2D>();
-            rb.gravityScale = 1;
-
-            heldGoat = null;
+            Debug.Log("No goat to drop.");
+            return;
         }
 
+        if (holdJoint != null)
+        {
+            Destroy(holdJoint);
+        }
+
+        Rigidbody rb = heldGoat.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = false;
+            rb.useGravity = true;
+        }
+
+        GoatRandomMovement goatMovement = heldGoat.GetComponent<GoatRandomMovement>();
+        if (goatMovement != null)
+        {
+            goatMovement.enabled = true;
+        }
+
+        Debug.Log($"Dropped goat '{heldGoat.name}'");
+        heldGoat = null;
         isHolding = false;
     }
 
-    // This should be on the child trigger collider (GoatDetector)
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnDrawGizmos()
     {
-        if (other.CompareTag("Goat"))
-            goatNearby = other.gameObject;
+        if (holdPoint != null)
+        {
+            // Draw a sphere showing the max pickup distance
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(holdPoint.position, maxDistance);
+        }
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    void Update()
     {
-        if (other.CompareTag("Goat") && other.gameObject == goatNearby)
-            goatNearby = null;
+        if (goat != null)
+        {
+            float distance = Vector3.Distance(holdPoint.position, goat.transform.position);
+            Debug.DrawLine(holdPoint.position, goat.transform.position, Color.red);
+            Debug.Log($"Distance to goat '{goat.name}': {distance}");
+        }
     }
 }

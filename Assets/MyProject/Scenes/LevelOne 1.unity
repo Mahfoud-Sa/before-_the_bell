@@ -5075,6 +5075,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4088438342261475627, guid: ddb45b7f6fc80f24598e8a4247e236d3, type: 3}
+      propertyPath: m_Constraints
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -5109,6 +5113,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHoldGoat1
   holdPoint: {fileID: 985922206}
+  maxDistance: 0.5
+  goat: {fileID: 1591627432}
 --- !u!1 &1437522605
 GameObject:
   m_ObjectHideFlags: 0
@@ -5651,7 +5657,7 @@ GameObject:
   - component: {fileID: 1518505695}
   m_Layer: 0
   m_Name: Graphics
-  m_TagString: Untagged
+  m_TagString: Goat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5937,7 +5943,7 @@ GameObject:
   - component: {fileID: 1591627439}
   m_Layer: 0
   m_Name: Goat
-  m_TagString: Player
+  m_TagString: Goat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5965,7 +5971,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 104
   m_CollisionDetection: 0
@@ -6060,7 +6066,7 @@ Transform:
   m_GameObject: {fileID: 1591627432}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.2, y: 2.27, z: -0}
+  m_LocalPosition: {x: -2.4, y: 2.3128645, z: -2.8287935}
   m_LocalScale: {x: 0.4712372, y: 0.53790534, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6472,6 +6478,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHoldGoat1
   holdPoint: {fileID: 985922206}
+  maxDistance: 1.5
+  goat: {fileID: 0}
 --- !u!1 &1628310824
 GameObject:
   m_ObjectHideFlags: 0
