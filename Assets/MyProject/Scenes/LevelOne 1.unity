@@ -8670,6 +8670,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3422802466948554979, guid: cd3c780f96584e743a06de9c3fdb4ee1, type: 3}
+      propertyPath: currentCoins
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7914298713556642677, guid: cd3c780f96584e743a06de9c3fdb4ee1, type: 3}
       propertyPath: m_Name
       value: UI Coin
