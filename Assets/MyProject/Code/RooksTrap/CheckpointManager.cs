@@ -14,6 +14,7 @@ public class CheckpointManager : MonoBehaviour
     public float blinkInterval = 0.15f;
 
     public Transform currentCheckpoint;
+    public Transform startCheckpoint;
 
     private void Awake()
     {
@@ -26,6 +27,7 @@ public class CheckpointManager : MonoBehaviour
     {
         // محاولة تلقائية لإيجاد اللاعب إذا لم يكن مرتبطاً في الـ Inspector
         AutoAssignPlayerIfMissing();
+        if (currentCheckpoint == null) player.position = startCheckpoint.position;
         if (currentCheckpoint != null)
             player.position = currentCheckpoint.position;
     }
