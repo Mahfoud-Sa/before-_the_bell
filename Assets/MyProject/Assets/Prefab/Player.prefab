@@ -181,7 +181,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   jumpableGround:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 128
   moveSpeed: 7
   jumpHeight: 5
   jumpAnimDuration: 0.5

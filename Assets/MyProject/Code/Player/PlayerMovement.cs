@@ -10,22 +10,26 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Ground / Movement")]
     [SerializeField] private LayerMask jumpableGround;
-    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float moveSpeed = 7f;
 
     [Header("Animation-driven Jump")]
-    [SerializeField] private float jumpHeight = 4f;
+    [SerializeField] private float jumpHeight = 7f;
     [SerializeField] private float jumpAnimDuration = 0.5f;
-    [SerializeField] private AnimationCurve jumpMotion = new AnimationCurve(
+    [SerializeField]
+    private AnimationCurve jumpMotion = new AnimationCurve(
         new Keyframe(0f, 0f),
         new Keyframe(0.5f, 1f),
         new Keyframe(1f, 0f)
     );
 
+    [Header("Run Jump Boost")]
+    [SerializeField] private float runJumpBoost = 3f; // 🔥 اندفاعة اضافية عند القفز اثناء الجري
+
     private float dirX = 0f;
 
     private bool _moveRightInput = false;
     private bool _moveLeftInput = false;
-    private bool _jumpPressed = false;   // ✅ NEW (Mobile Jump)
+    private bool _jumpPressed = false;
 
     private enum MovementState { idle, running, jumping, runningjumping }
 
@@ -51,32 +55,25 @@ public class PlayerMovement : MonoBehaviour
         // Reset horizontal input
         dirX = 0f;
 
-        // Mobile input
         if (_moveRightInput) dirX = 1f;
         else if (_moveLeftInput) dirX = -1f;
 
-        // Keyboard fallback
         if (dirX == 0)
-        {
             dirX = Input.GetAxisRaw("Horizontal");
-        }
 
-        // Apply horizontal movement
         if (rb != null)
         {
             rb.linearVelocity = new Vector3(dirX * moveSpeed, rb.linearVelocity.y, 0f);
         }
 
-        // Run sound
         if (Mathf.Abs(dirX) > 0.1f && IsGrounded())
             SoundManager.Instance?.StartRunSound();
         else
             SoundManager.Instance?.StopRunSound();
 
-        // ✅ Jump input (Mobile + Keyboard)
         if ((_jumpPressed || Input.GetButtonDown("Jump")) && IsGrounded() && !_isJumpingAnimated)
         {
-            _jumpPressed = false; // consume mobile input
+            _jumpPressed = false;
 
             _justRanAndJumped = Mathf.Abs(dirX) > 0.01f;
 
@@ -99,6 +96,17 @@ public class PlayerMovement : MonoBehaviour
         rb.useGravity = false;
 
         float startY = rb.position.y;
+        float currentX = rb.position.x;
+
+        // 🔥 نأخذ السرعة الحالية
+        float appliedHorSpeed = rb.linearVelocity.x;
+
+        // 🔥 إضافة اندفاعة اذا كان يجري
+        if (Mathf.Abs(dirX) > 0.1f)
+        {
+            appliedHorSpeed += dirX * runJumpBoost;
+        }
+
         float elapsed = 0f;
 
         while (elapsed < jumpAnimDuration)
@@ -107,39 +115,29 @@ public class PlayerMovement : MonoBehaviour
             float curveValue = jumpMotion.Evaluate(t);
             float targetY = startY + curveValue * jumpHeight;
 
-            rb.MovePosition(new Vector3(rb.position.x, targetY, rb.position.z));
+            // تحريك X و Y معاً
+            currentX += appliedHorSpeed * Time.fixedDeltaTime;
+
+            rb.MovePosition(new Vector3(currentX, targetY, rb.position.z));
 
             yield return new WaitForFixedUpdate();
             elapsed += Time.fixedDeltaTime;
         }
 
         float finalValue = jumpMotion.Evaluate(1f);
-        rb.MovePosition(new Vector3(rb.position.x, startY + finalValue * jumpHeight, rb.position.z));
+        rb.MovePosition(new Vector3(currentX, startY + finalValue * jumpHeight, rb.position.z));
 
         rb.useGravity = true;
-        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+
+        // نحافظ على السرعة الأفقية بعد الهبوط
+        rb.linearVelocity = new Vector3(appliedHorSpeed, 0f, rb.linearVelocity.z);
 
         _isJumpingAnimated = false;
     }
 
-    // -------- Mobile Button Methods --------
-
-    public void PressRight(bool isPressed)
-    {
-        _moveRightInput = isPressed;
-    }
-
-    public void PressLeft(bool isPressed)
-    {
-        _moveLeftInput = isPressed;
-    }
-
-    public void PressJump()
-    {
-        _jumpPressed = true;
-    }
-
-    // ---------------------------------------
+    public void PressRight(bool isPressed) => _moveRightInput = isPressed;
+    public void PressLeft(bool isPressed) => _moveLeftInput = isPressed;
+    public void PressJump() => _jumpPressed = true;
 
     private void UpdateAnimationState()
     {
@@ -174,15 +172,13 @@ public class PlayerMovement : MonoBehaviour
         bool grounded = IsGrounded();
 
         if (grounded)
-        {
             _justRanAndJumped = false;
-        }
 
         if (!grounded && rb != null)
         {
             if (_justRanAndJumped)
                 state = MovementState.runningjumping;
-            else if (rb.linearVelocity.y > .1f)
+            else
                 state = MovementState.jumping;
         }
 

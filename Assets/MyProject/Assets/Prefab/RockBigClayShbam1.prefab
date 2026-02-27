@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 840432722181584552}
   - component: {fileID: 2619321994199319947}
   - component: {fileID: 2124140510438017467}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: RockBigClayShbam1
   m_TagString: Rock
   m_Icon: {fileID: 0}
@@ -155,9 +155,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FallingRock
   groundLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 128
   dustPrefab: {fileID: 9080140021571130472, guid: 37eb9b86e7f0ea14cad96b9324956670, type: 3}
-  isBigRock: 0
+  isBigRock: 1
   coinPrefab: {fileID: 3491449334708317365, guid: f5ead24d2f280d848b87918c141d03cc, type: 3}
   coinsOnLanding: 1
   coinSpawnRadius: 0
