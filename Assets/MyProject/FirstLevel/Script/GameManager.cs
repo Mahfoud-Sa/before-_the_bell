@@ -2,29 +2,17 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;
-
-    [Header("Goat System")]
-    public GoatRandomMovement goat;
-    public Transform holdPosition;
-
-    [Header("Timer System")]
     public float gameTime = 60f;
     private float currentTime;
     private bool gameEnded = false;
 
-    private void Awake()
-    {
-        Instance = this;
-    }
-
-    private void Start()
+    void Start()
     {
         currentTime = gameTime;
         Time.timeScale = 1f;
     }
 
-    private void Update()
+    void Update()
     {
         if (gameEnded)
             return;
@@ -37,16 +25,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // 🔘 Goat Button
-    public void OnButtonPressed()
-    {
-        if (goat != null && holdPosition != null)
-        {
-            goat.Hold(holdPosition);
-        }
-    }
-
-    // ❌ Game Over
     public void GameOver()
     {
         if (gameEnded) return;
@@ -55,7 +33,6 @@ public class GameManager : MonoBehaviour
         EndGameUI.Instance.ShowGameOver();
     }
 
-    // 🏆 Win
     public void WinGame()
     {
         if (gameEnded) return;
