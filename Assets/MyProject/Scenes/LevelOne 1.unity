@@ -740,6 +740,7 @@ GameObject:
   - component: {fileID: 184972333}
   - component: {fileID: 184972335}
   - component: {fileID: 184972334}
+  - component: {fileID: 184972336}
   m_Layer: 5
   m_Name: MenuImage
   m_TagString: Untagged
@@ -806,6 +807,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 184972332}
   m_CullTransparentMesh: 1
+--- !u!114 &184972336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 184972332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa9d3c42051135d4f8dbf952cf2457cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &218933838 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2095503863449277927, guid: 4c7bc4df3b17e8d48b80c1e78702c0ff, type: 3}
@@ -2176,7 +2189,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 379713416}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1271333594}
+        m_TargetAssemblyTypeName: EndGameUI, Assembly-CSharp
+        m_MethodName: RetryLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &379713416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6861,6 +6886,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9221480547265108340, guid: d3c00a6ba3205054994827a681454240, type: 3}
   m_PrefabInstance: {fileID: 1241074359}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1271333594 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4688435237896643541, guid: f8e74a09855bca642bcc2691f6fdcf12, type: 3}
+  m_PrefabInstance: {fileID: 340740815}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee406324fa8634a4495e167bbbcf0a62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EndGameUI
 --- !u!1 &1288499452
 GameObject:
   m_ObjectHideFlags: 0
@@ -7862,7 +7898,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7cd170fecef67540bfdf49dfb21449c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  gameTime: 10
+  gameTime: 60
 --- !u!4 &1465824906
 Transform:
   m_ObjectHideFlags: 0
@@ -8819,7 +8855,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1583242532}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1271333594}
+        m_TargetAssemblyTypeName: EndGameUI, Assembly-CSharp
+        m_MethodName: GoToMainMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1583242532
 MonoBehaviour:
   m_ObjectHideFlags: 0

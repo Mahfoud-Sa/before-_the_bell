@@ -27,9 +27,17 @@ public class EndGameUI : MonoBehaviour
         Time.timeScale = 0f;
     }
 
-    public void RestartGame()
+    // 🔁 Retry the current level
+    public void RetryLevel()
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    // 🏠 Return to main scene
+    public void GoToMainMenu()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("MainMenu"); // Replace with your main scene name
     }
 }
