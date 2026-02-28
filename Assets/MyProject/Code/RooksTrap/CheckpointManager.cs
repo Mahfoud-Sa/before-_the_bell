@@ -133,13 +133,14 @@ public class CheckpointManager : MonoBehaviour
             playerRb.angularVelocity = Vector3.zero;
 
             // نضمن النقل بالتنسيق مع فيزياء Rigidbody
-            player.position = currentCheckpoint.position;
-            playerRb.MovePosition(currentCheckpoint.position);
+            player.position =  new Vector3(currentCheckpoint.position.x, currentCheckpoint.position.y, player.position.z);
+           
+            playerRb.MovePosition(new Vector3(currentCheckpoint.position.x, currentCheckpoint.position.y, player.position.z));
         }
         else
         {
             // لا يوجد Rigidbody: ننقل الـ Transform مباشرة
-            player.position = currentCheckpoint.position;
+            player.position = new Vector3(currentCheckpoint.position.x, currentCheckpoint.position.y, player.position.z);
         }
 
         Debug.Log("[CheckpointManager] Player respawned to checkpoint: " + currentCheckpoint.name);
