@@ -2211,6 +2211,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tools
       objectReference: {fileID: 0}
+    - target: {fileID: 3071786928787380319, guid: 3e0cced7ec5d2bd418f9e094eee842d2, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8467455161843996142, guid: 3e0cced7ec5d2bd418f9e094eee842d2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 93.53658
@@ -2527,6 +2531,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1437522609}
     m_Modifications:
+    - target: {fileID: 595546375213881957, guid: a851bd9a227ad4946b375a44c26b1309, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2172175578471744922, guid: a851bd9a227ad4946b375a44c26b1309, type: 3}
       propertyPath: m_Name
       value: UI Timer
