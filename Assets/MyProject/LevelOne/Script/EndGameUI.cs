@@ -5,14 +5,35 @@ public class EndGameUI : MonoBehaviour
 {
     public static EndGameUI Instance;
 
+    [Header("Panels")]
+    public GameObject startPanel;
     public GameObject gameOverPanel;
     public GameObject winPanel;
 
     private void Awake()
     {
+
         Instance = this;
+    }
+
+    private void Start()
+    {
+        Debug.Log("StartPanel should show now");
+
+        // Show start panel
+        startPanel.SetActive(true);
         gameOverPanel.SetActive(false);
         winPanel.SetActive(false);
+
+        // Pause the game
+        Time.timeScale = 0f;
+    }
+
+    // ▶ Play Button
+    public void StartGame()
+    {
+        startPanel.SetActive(false);
+        Time.timeScale = 1f;
     }
 
     public void ShowGameOver()
@@ -27,17 +48,15 @@ public class EndGameUI : MonoBehaviour
         Time.timeScale = 0f;
     }
 
-    // 🔁 Retry the current level
     public void RetryLevel()
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    // 🏠 Return to main scene
     public void GoToMainMenu()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenu"); // Replace with your main scene name
+        SceneManager.LoadScene("MainMenu"); // Change if needed
     }
 }
