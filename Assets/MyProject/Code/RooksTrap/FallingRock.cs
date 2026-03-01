@@ -82,6 +82,7 @@ public class FallingRock : MonoBehaviour
                 SoundManager.Instance?.PlayBigRock();
             else
                 SoundManager.Instance?.PlaySmallRock();
+            SoundManager.Instance.PlayAfterFallingStones();
             // — 1) غبار
             if (dustPrefab != null)
             {

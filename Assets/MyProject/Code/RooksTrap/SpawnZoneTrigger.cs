@@ -9,6 +9,7 @@ public class SpawnZoneTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Debug.Log("Player Entered Zone");
+            SoundManager.Instance.PlayComingRockSound();
             spawner.StartSpawning(other.transform);
         }
     }
