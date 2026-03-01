@@ -1,20 +1,31 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class SplashScreenController : MonoBehaviour
 {
-    [SerializeField] private float splashDuration = 5f;
-    [SerializeField] private string nextSceneName = "MainMenu";
+    [Header("Splash Settings")]
+    [SerializeField] private float splashDuration = 5f;      // Duration of splash screen
+    [SerializeField] private string nextSceneName = "MainMenu"; // Scene to load after splash
 
     void Start()
     {
-        StartCoroutine(LoadAfterDelay());
+        StartCoroutine(PlaySplashAndLoad());
     }
 
-    IEnumerator LoadAfterDelay()
+    private IEnumerator PlaySplashAndLoad()
     {
+        // 1️⃣ Wait for splash screen duration
         yield return new WaitForSeconds(splashDuration);
-        SceneManager.LoadScene(nextSceneName);
+
+        // 2️⃣ Load next scene using LoadingManager
+        if (LoadingManager.Instance != null)
+        {
+            LoadingManager.Instance.LoadScene(nextSceneName);
+        }
+        else
+        {
+            // Fallback if LoadingManager is missing
+            UnityEngine.SceneManagement.SceneManager.LoadScene(nextSceneName);
+        }
     }
 }
