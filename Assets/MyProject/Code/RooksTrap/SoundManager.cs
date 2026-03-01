@@ -8,12 +8,18 @@ public class SoundManager : MonoBehaviour
     public AudioSource musicSource;      // صوت الخلفية
     public AudioSource sfxSource;        // مؤثرات عامة
     public AudioSource loopSource;       // للأصوات المتكررة مثل الجري
-    public AudioSource playerSounds;      
-    public AudioSource rockSounds;      
+    public AudioSource playerSource;      
+    public AudioSource rockSource;
+    public AudioSource riverSource;
 
     [Header("Music")]
     public AudioClip backgroundMusic;
-
+    [Header("River")]
+    public AudioClip riverSound;
+    [Header("Gots")]
+    public AudioClip gotsSound;
+    [Header("Win")]
+    public AudioClip winSound;
     [Header("Player Sounds")]
     public AudioClip jumpSound;
     public AudioClip runLoopSound;
@@ -22,6 +28,8 @@ public class SoundManager : MonoBehaviour
     [Header("Rock Sounds")]
     public AudioClip smallRockImpact;
     public AudioClip bigRockImpact;
+    public AudioClip afterFallingStone;
+    public AudioClip comingStone;
 
     [Header("Coin")]
     public AudioClip coinPickupSound;
@@ -64,12 +72,17 @@ public class SoundManager : MonoBehaviour
     public void PlayPlayerSounds(AudioClip clip)
     {
         if (clip == null) return;
-        playerSounds.PlayOneShot(clip);
+        playerSource.PlayOneShot(clip);
+    }
+    public void PlayRiverSounds(AudioClip clip)
+    {
+        if (clip == null) return;
+        riverSource.PlayOneShot(clip);
     }
     public void PlayRockSounds(AudioClip clip)
     {
         if (clip == null) return;
-        rockSounds.PlayOneShot(clip);
+        rockSource.PlayOneShot(clip);
     }
     // ---------- RUN LOOP ----------
     public void StartRunSound()
@@ -89,11 +102,30 @@ public class SoundManager : MonoBehaviour
         if (loopSource.isPlaying)
             loopSource.Stop();
     }
+    public void StopRiverSource()
+    {
+        if (riverSource.isPlaying)
+            riverSource.Stop();
+    }
 
     // ---------- Public API ----------
+    // ---------- Player ----------
     public void PlayJump() => PlayPlayerSounds(jumpSound);
     public void PlayPlayerHit() => PlayPlayerSounds(playerHitSound);
+    // ---------- Rocks ----------
+    public void PlayComingRockSound() => PlayRockSounds(comingStone);
     public void PlaySmallRock() => PlayRockSounds(smallRockImpact);
     public void PlayBigRock() => PlaySFX(bigRockImpact);
+    public void PlayAfterFallingStones() => PlaySFX(afterFallingStone);
+    // ---------- Coin----------
     public void PlayCoin() => PlaySFX(coinPickupSound);
+    // ---------- Gots----------
+    public void PlayGotsSound() => PlaySFX(gotsSound);
+    // ---------- RiverSound----------
+    public void PlayRiverSound() => PlayRiverSounds(riverSound);
+    public void StopRiverSound() => StopRiverSource();
+
+
+    // ---------- WinSound----------
+    public void PlayWinSound() => PlaySFX(winSound);
 }
