@@ -3,11 +3,16 @@ using UnityEngine.SceneManagement;
 
 public class PlayButtonScript : MonoBehaviour
 {
- public void PlayGame()
+    public void PlayGame()
     {
-       // LoadingManager.Instance.LoadScene("LevelOne");
-        SceneManager.LoadScene(2);
-        // OR if you want by index:
-       //  LoadingManager.Instance.LoadScene("LevelOne 1");
+        if (LoadingManager.Instance != null)
+        {
+         
+            LoadingManager.Instance.LoadScene(3);
+        }
+        else
+        {
+            SceneManager.LoadScene(3);
+        }
     }
 }
