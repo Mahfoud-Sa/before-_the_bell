@@ -2,37 +2,36 @@ using UnityEngine;
 
 public class WinScript : MonoBehaviour
 {
-    public GameObject objectToActivate;
-    public GameObject player;
+    public GameObject winPanel;
     public GameObject hintOfWin;
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            // Player has collided with the trigger, activate the specified game object
-            if (objectToActivate != null)
-            {
+            Debug.Log("Player entered win trigger");
+  if (winPanel != null)
+                    winPanel.SetActive(true);
+            if (hintOfWin != null)
                 hintOfWin.SetActive(true);
-                if (player.GetComponent<ItemCollector>().CheckWinStatus()) {
-                    hintOfWin.SetActive(false);
-                    objectToActivate.SetActive(true);
-                    Time.timeScale = 0;
-                }
-                
-               
-            }
-            
-            // You can add more logic or actions here if needed
 
-            // Disable the trigger itself if you want it to activate only once
-            //gameObject.SetActive(false);
+            ItemCollector collector = other.GetComponent<ItemCollector>();
+            if (collector != null && collector.CheckWinStatus())
+            {
+                if (hintOfWin != null)
+                    hintOfWin.SetActive(false);
+
+                if (winPanel != null)
+                    winPanel.SetActive(true);
+
+                Time.timeScale = 0f;
+            }
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && hintOfWin != null)
         {
             hintOfWin.SetActive(false);
         }
