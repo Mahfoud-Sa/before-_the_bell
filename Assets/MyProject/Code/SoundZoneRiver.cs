@@ -10,7 +10,8 @@ public class SoundZoneRiver : MonoBehaviour
         {
             Debug.Log("Player Entered SoundZone");
             SoundManager.Instance.PlayRiverSound();
-           
+            SoundManager.Instance.PlayGotsSound();
+
         }
     }
 
