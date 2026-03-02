@@ -2,27 +2,21 @@ using UnityEngine;
 
 public class PlayerHoldGoat : MonoBehaviour
 {
-   public Transform holdPoint; // Where the goat will be held
+    public Transform holdPoint;
+
     private GameObject goatNearby;
     private GameObject heldGoat;
     private bool isHolding = false;
 
-    void Update()
+    public void ToggleHold()
     {
-        // Press and hold button (space, or any custom input)
-        if (Input.GetKey(KeyCode.Space)) 
+        if (!isHolding && goatNearby != null)
         {
-            if (!isHolding && goatNearby != null)
-            {
-                PickUpGoat();
-            }
+            PickUpGoat();
         }
-        else
+        else if (isHolding)
         {
-            if (isHolding)
-            {
-                DropGoat();
-            }
+            DropGoat();
         }
     }
 
@@ -30,12 +24,14 @@ public class PlayerHoldGoat : MonoBehaviour
     {
         heldGoat = goatNearby;
         heldGoat.transform.position = holdPoint.position;
-        heldGoat.transform.parent = holdPoint; // Make it follow player
+        heldGoat.transform.parent = holdPoint;
+
         var rb = heldGoat.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
-            rb.isKinematic = true; // Disable physics while holding
+            rb.isKinematic = true;
         }
+
         isHolding = true;
     }
 
@@ -44,17 +40,19 @@ public class PlayerHoldGoat : MonoBehaviour
         if (heldGoat != null)
         {
             heldGoat.transform.parent = null;
+
             var rb = heldGoat.GetComponent<Rigidbody2D>();
             if (rb != null)
             {
-                rb.isKinematic = false; // Re-enable physics
+                rb.isKinematic = false;
             }
+
             heldGoat = null;
         }
+
         isHolding = false;
     }
 
-    // Detect when goat is close
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Goat"))
