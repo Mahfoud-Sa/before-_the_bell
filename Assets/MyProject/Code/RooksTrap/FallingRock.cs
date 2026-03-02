@@ -82,7 +82,7 @@ public class FallingRock : MonoBehaviour
                 SoundManager.Instance?.PlayBigRock();
             else
                 SoundManager.Instance?.PlaySmallRock();
-            SoundManager.Instance.PlayAfterFallingStones();
+           
             // — 1) غبار
             if (dustPrefab != null)
             {
@@ -105,7 +105,7 @@ public class FallingRock : MonoBehaviour
                 rb.angularVelocity = Vector3.zero;
                 rb.isKinematic = true;
             }
-
+            SoundManager.Instance.PlayAfterFallingStones();
             // — 4) ابدأ تدمير الحجر بعد landingLifetime
             StartCoroutine(DestroyAfterLanding(landingLifetime));
         }

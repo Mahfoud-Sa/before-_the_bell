@@ -89,7 +89,7 @@ public class RockSpawner : MonoBehaviour
         while (isSpawning)
         {
             float waveElapsed = 0f;
-
+            SoundManager.Instance.PlayComingRockSound();
             while (isSpawning && waveElapsed < waveDuration)
             {
                 // توليد الأحجار الاعتيادية
