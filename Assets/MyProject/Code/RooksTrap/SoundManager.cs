@@ -20,6 +20,10 @@ public class SoundManager : MonoBehaviour
     public AudioClip gotsSound;
     [Header("Win")]
     public AudioClip winSound;
+    [Header("Lose")]
+    public AudioClip loseSound;
+    [Header("Bell Sound")]
+    public AudioClip bellSound;
     [Header("Player Sounds")]
     public AudioClip jumpSound;
     public AudioClip runLoopSound;
@@ -128,4 +132,9 @@ public class SoundManager : MonoBehaviour
 
     // ---------- WinSound----------
     public void PlayWinSound() => PlaySFX(winSound);
+    // ---------- LoseSound----------
+    public void PlayLoseSound() => PlaySFX(loseSound);
+    // ---------- BellSound----------
+    public void PlayBellSound() => PlaySFX(bellSound);
+
 }

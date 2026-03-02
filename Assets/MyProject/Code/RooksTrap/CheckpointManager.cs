@@ -21,11 +21,13 @@ public class CheckpointManager : MonoBehaviour
         // singleton بسيط
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
+        
     }
 
     private void Start()
     {
         // محاولة تلقائية لإيجاد اللاعب إذا لم يكن مرتبطاً في الـ Inspector
+        SoundManager.Instance.PlayBellSound();
         AutoAssignPlayerIfMissing();
         if (currentCheckpoint == null) player.position = startCheckpoint.position;
         if (currentCheckpoint != null)
@@ -101,6 +103,7 @@ public class CheckpointManager : MonoBehaviour
         }
 
         StartCoroutine(BlinkThenRespawn());
+        SoundManager.Instance.PlayBellSound();
     }
 
     private IEnumerator BlinkThenRespawn()

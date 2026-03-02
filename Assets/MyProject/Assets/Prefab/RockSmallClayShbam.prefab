@@ -69,7 +69,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f8894abcc26a5af4fbbff89c3dd9b2ae, type: 2}
+  - {fileID: 2100000, guid: 5f692bdf780494d4d8bc2a84a047cfe5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -134,7 +134,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FallingRock
   groundLayer:
     serializedVersion: 2
-    m_Bits: 384
+    m_Bits: 128
   dustPrefab: {fileID: 2787556212050310887, guid: 09c15d03301b6144e99cb850a3dd54c8, type: 3}
   isBigRock: 0
   coinPrefab: {fileID: 3491449334708317365, guid: f5ead24d2f280d848b87918c141d03cc, type: 3}
