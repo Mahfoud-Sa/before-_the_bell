@@ -8,6 +8,6 @@ public class PlayButtonScript : MonoBehaviour
         //SceneManager.LoadScene("LevelOne");
         
         // OR if you prefer using index:
-         SceneManager.LoadScene(1);
+         SceneManager.LoadScene(2);
     }
 }
