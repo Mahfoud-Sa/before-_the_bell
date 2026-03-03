@@ -326,11 +326,13 @@ MonoBehaviour:
   seedPrefab: {fileID: 1824206876322940066, guid: 521b1042547b674418d16781e764db5a, type: 3}
   minSeeds: 5
   maxSeeds: 5
+  treeScale: {x: 0.43, y: 0.43, z: 1}
   coinPrefab: {fileID: 5703569784957788254, guid: 1112a721fc6a40f40a0fa71f434cebc2, type: 3}
   minCoins: 1
   maxCoins: 4
   coinSpawnZ: -50
   chopSound: {fileID: 8300000, guid: b3913210e3a39c2479effe0dee48e432, type: 3}
+  seedRadius: 0.7
 --- !u!212 &26878648
 SpriteRenderer:
   serializedVersion: 2
@@ -1482,7 +1484,7 @@ GameObject:
   - component: {fileID: 332332092}
   - component: {fileID: 332332091}
   m_Layer: 5
-  m_Name: StarsImage (2)
+  m_Name: Star3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4247,11 +4249,13 @@ MonoBehaviour:
   seedPrefab: {fileID: 1824206876322940066, guid: 521b1042547b674418d16781e764db5a, type: 3}
   minSeeds: 5
   maxSeeds: 5
+  treeScale: {x: 0.43, y: 0.43, z: 1}
   coinPrefab: {fileID: 5703569784957788254, guid: 1112a721fc6a40f40a0fa71f434cebc2, type: 3}
   minCoins: 1
   maxCoins: 4
   coinSpawnZ: -50
   chopSound: {fileID: 8300000, guid: b3913210e3a39c2479effe0dee48e432, type: 3}
+  seedRadius: 0.7
 --- !u!212 &753181567
 SpriteRenderer:
   serializedVersion: 2
@@ -5496,11 +5500,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 844243215}
   m_CullTransparentMesh: 1
---- !u!4 &850851528 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2578091336346633030, guid: e1cbba73ac0764041998e102f2955de5, type: 3}
-  m_PrefabInstance: {fileID: 1078399206}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &857613492
 GameObject:
   m_ObjectHideFlags: 0
@@ -5571,11 +5570,13 @@ MonoBehaviour:
   seedPrefab: {fileID: 1824206876322940066, guid: 521b1042547b674418d16781e764db5a, type: 3}
   minSeeds: 5
   maxSeeds: 5
+  treeScale: {x: 0.43, y: 0.43, z: 1}
   coinPrefab: {fileID: 5703569784957788254, guid: 1112a721fc6a40f40a0fa71f434cebc2, type: 3}
   minCoins: 1
   maxCoins: 4
   coinSpawnZ: -50
   chopSound: {fileID: 8300000, guid: b3913210e3a39c2479effe0dee48e432, type: 3}
+  seedRadius: 0.7
 --- !u!212 &857613496
 SpriteRenderer:
   serializedVersion: 2
@@ -5933,7 +5934,7 @@ GameObject:
   - component: {fileID: 917123005}
   - component: {fileID: 917123004}
   m_Layer: 5
-  m_Name: StarsImage
+  m_Name: Star1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6066,11 +6067,13 @@ MonoBehaviour:
   seedPrefab: {fileID: 1824206876322940066, guid: 521b1042547b674418d16781e764db5a, type: 3}
   minSeeds: 5
   maxSeeds: 5
+  treeScale: {x: 0.43, y: 0.43, z: 1}
   coinPrefab: {fileID: 5703569784957788254, guid: 1112a721fc6a40f40a0fa71f434cebc2, type: 3}
   minCoins: 1
   maxCoins: 4
   coinSpawnZ: -50
   chopSound: {fileID: 8300000, guid: b3913210e3a39c2479effe0dee48e432, type: 3}
+  seedRadius: 0.7
 --- !u!212 &936915831
 SpriteRenderer:
   serializedVersion: 2
@@ -6533,7 +6536,7 @@ PrefabInstance:
     - target: {fileID: 3405260010198141080, guid: e1cbba73ac0764041998e102f2955de5, type: 3}
       propertyPath: currentCheckpoint
       value: 
-      objectReference: {fileID: 850851528}
+      objectReference: {fileID: 1662074388}
     - target: {fileID: 4240267400719566282, guid: e1cbba73ac0764041998e102f2955de5, type: 3}
       propertyPath: m_Name
       value: CheckpointManager
@@ -6774,11 +6777,13 @@ MonoBehaviour:
   seedPrefab: {fileID: 1824206876322940066, guid: 521b1042547b674418d16781e764db5a, type: 3}
   minSeeds: 5
   maxSeeds: 5
+  treeScale: {x: 0.43, y: 0.43, z: 1}
   coinPrefab: {fileID: 5703569784957788254, guid: 1112a721fc6a40f40a0fa71f434cebc2, type: 3}
   minCoins: 1
   maxCoins: 4
   coinSpawnZ: -50
   chopSound: {fileID: 8300000, guid: b3913210e3a39c2479effe0dee48e432, type: 3}
+  seedRadius: 0.7
 --- !u!212 &1116866387
 SpriteRenderer:
   serializedVersion: 2
@@ -8290,7 +8295,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1401350186}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1271333594}
+        m_TargetAssemblyTypeName: EndGameUI, Assembly-CSharp
+        m_MethodName: RetryLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1401350186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8399,11 +8416,13 @@ MonoBehaviour:
   seedPrefab: {fileID: 1824206876322940066, guid: 521b1042547b674418d16781e764db5a, type: 3}
   minSeeds: 5
   maxSeeds: 5
+  treeScale: {x: 0.43, y: 0.43, z: 1}
   coinPrefab: {fileID: 5703569784957788254, guid: 1112a721fc6a40f40a0fa71f434cebc2, type: 3}
   minCoins: 1
   maxCoins: 4
   coinSpawnZ: -50
   chopSound: {fileID: 8300000, guid: b3913210e3a39c2479effe0dee48e432, type: 3}
+  seedRadius: 0.7
 --- !u!212 &1407251899
 SpriteRenderer:
   serializedVersion: 2
@@ -8566,7 +8585,7 @@ GameObject:
   - component: {fileID: 1426881188}
   - component: {fileID: 1426881187}
   m_Layer: 5
-  m_Name: StarsImage (1)
+  m_Name: Star2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9171,11 +9190,13 @@ MonoBehaviour:
   seedPrefab: {fileID: 1824206876322940066, guid: 521b1042547b674418d16781e764db5a, type: 3}
   minSeeds: 5
   maxSeeds: 5
+  treeScale: {x: 0.43, y: 0.43, z: 1}
   coinPrefab: {fileID: 5703569784957788254, guid: 1112a721fc6a40f40a0fa71f434cebc2, type: 3}
   minCoins: 1
   maxCoins: 4
   coinSpawnZ: -50
   chopSound: {fileID: 8300000, guid: b3913210e3a39c2479effe0dee48e432, type: 3}
+  seedRadius: 0.7
 --- !u!212 &1511418831
 SpriteRenderer:
   serializedVersion: 2
@@ -10715,6 +10736,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6108184503489119086}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1662074388 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6164858942900728464, guid: e1cbba73ac0764041998e102f2955de5, type: 3}
+  m_PrefabInstance: {fileID: 1078399206}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1671153041
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11018,11 +11044,13 @@ MonoBehaviour:
   seedPrefab: {fileID: 1824206876322940066, guid: 521b1042547b674418d16781e764db5a, type: 3}
   minSeeds: 5
   maxSeeds: 5
+  treeScale: {x: 0.43, y: 0.43, z: 1}
   coinPrefab: {fileID: 5703569784957788254, guid: 1112a721fc6a40f40a0fa71f434cebc2, type: 3}
   minCoins: 1
   maxCoins: 4
   coinSpawnZ: -50
   chopSound: {fileID: 8300000, guid: b3913210e3a39c2479effe0dee48e432, type: 3}
+  seedRadius: 0.7
 --- !u!212 &1736911042
 SpriteRenderer:
   serializedVersion: 2
@@ -11289,7 +11317,7 @@ Transform:
   m_GameObject: {fileID: 1788485034}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 507.1, y: -1.28, z: 0}
+  m_LocalPosition: {x: 1209.5, y: -1.28, z: 0}
   m_LocalScale: {x: 1.9805694, y: 1.9805694, z: 1.9805694}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -12435,11 +12463,13 @@ MonoBehaviour:
   seedPrefab: {fileID: 1824206876322940066, guid: 521b1042547b674418d16781e764db5a, type: 3}
   minSeeds: 5
   maxSeeds: 5
+  treeScale: {x: 0.43, y: 0.43, z: 1}
   coinPrefab: {fileID: 5703569784957788254, guid: 1112a721fc6a40f40a0fa71f434cebc2, type: 3}
   minCoins: 1
   maxCoins: 4
   coinSpawnZ: -50
   chopSound: {fileID: 8300000, guid: b3913210e3a39c2479effe0dee48e432, type: 3}
+  seedRadius: 0.7
 --- !u!212 &1948463134
 SpriteRenderer:
   serializedVersion: 2
@@ -14013,10 +14043,10 @@ RectTransform:
   - {fileID: 1672945541252715688}
   m_Father: {fileID: 7173622375195880048}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 141.66501, y: -129.81174}
+  m_SizeDelta: {x: 240, y: 240}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &281605175821345559
 GameObject:
@@ -21536,10 +21566,10 @@ RectTransform:
   - {fileID: 6429760203172122459}
   m_Father: {fileID: 7173622375195880048}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 541.66504, y: -129.81174}
+  m_SizeDelta: {x: 240, y: 240}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4220908930007496473
 CanvasRenderer:
@@ -25330,10 +25360,10 @@ RectTransform:
   - {fileID: 3839374444695203049}
   m_Father: {fileID: 7173622375195880048}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 341.665, y: -129.81174}
+  m_SizeDelta: {x: 240, y: 240}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!4 &5879625708254489893
 Transform:
@@ -29362,10 +29392,10 @@ RectTransform:
   - {fileID: 7815176852699734189}
   m_Father: {fileID: 7173622375195880048}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 541.66504, y: -399.81174}
+  m_SizeDelta: {x: 240, y: 240}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7861147860726763073
 GameObject:
@@ -29896,7 +29926,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &8364827103556524439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30707,10 +30737,10 @@ RectTransform:
   - {fileID: 417650289406071150}
   m_Father: {fileID: 7173622375195880048}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 141.66501, y: -399.81174}
+  m_SizeDelta: {x: 240, y: 240}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8870634347941165488
 GameObject:
@@ -31165,10 +31195,10 @@ RectTransform:
   - {fileID: 5541184178417994387}
   m_Father: {fileID: 7173622375195880048}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 341.665, y: -399.81174}
+  m_SizeDelta: {x: 240, y: 240}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &9067814581480824118
 MeshRenderer:
@@ -31516,11 +31546,13 @@ SceneRoots:
   - {fileID: 1626882802}
   - {fileID: 2018949788}
   - {fileID: 3687788232573871657}
+  - {fileID: 1806256853}
   - {fileID: 283724911}
   - {fileID: 1299443386}
   - {fileID: 1671153041}
   - {fileID: 807088343}
   - {fileID: 510317455}
+  - {fileID: 340740815}
   - {fileID: 1138232665}
   - {fileID: 1518856180}
   - {fileID: 1756905843}
@@ -31528,11 +31560,9 @@ SceneRoots:
   - {fileID: 1845990500}
   - {fileID: 1465824906}
   - {fileID: 3711631309478916075}
-  - {fileID: 340740815}
   - {fileID: 746525877}
   - {fileID: 761010661}
   - {fileID: 662334985}
-  - {fileID: 1806256853}
   - {fileID: 1437522609}
   - {fileID: 1719083146}
   - {fileID: 740246161}
