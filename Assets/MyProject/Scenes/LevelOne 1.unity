@@ -326,11 +326,13 @@ MonoBehaviour:
   seedPrefab: {fileID: 1824206876322940066, guid: 521b1042547b674418d16781e764db5a, type: 3}
   minSeeds: 5
   maxSeeds: 5
+  treeScale: {x: 0.43, y: 0.43, z: 1}
   coinPrefab: {fileID: 5703569784957788254, guid: 1112a721fc6a40f40a0fa71f434cebc2, type: 3}
   minCoins: 1
   maxCoins: 4
   coinSpawnZ: -50
   chopSound: {fileID: 8300000, guid: b3913210e3a39c2479effe0dee48e432, type: 3}
+  seedRadius: 0.7
 --- !u!212 &26878648
 SpriteRenderer:
   serializedVersion: 2
@@ -4247,11 +4249,13 @@ MonoBehaviour:
   seedPrefab: {fileID: 1824206876322940066, guid: 521b1042547b674418d16781e764db5a, type: 3}
   minSeeds: 5
   maxSeeds: 5
+  treeScale: {x: 0.43, y: 0.43, z: 1}
   coinPrefab: {fileID: 5703569784957788254, guid: 1112a721fc6a40f40a0fa71f434cebc2, type: 3}
   minCoins: 1
   maxCoins: 4
   coinSpawnZ: -50
   chopSound: {fileID: 8300000, guid: b3913210e3a39c2479effe0dee48e432, type: 3}
+  seedRadius: 0.7
 --- !u!212 &753181567
 SpriteRenderer:
   serializedVersion: 2
@@ -5496,11 +5500,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 844243215}
   m_CullTransparentMesh: 1
---- !u!4 &850851528 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2578091336346633030, guid: e1cbba73ac0764041998e102f2955de5, type: 3}
-  m_PrefabInstance: {fileID: 1078399206}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &857613492
 GameObject:
   m_ObjectHideFlags: 0
@@ -5571,11 +5570,13 @@ MonoBehaviour:
   seedPrefab: {fileID: 1824206876322940066, guid: 521b1042547b674418d16781e764db5a, type: 3}
   minSeeds: 5
   maxSeeds: 5
+  treeScale: {x: 0.43, y: 0.43, z: 1}
   coinPrefab: {fileID: 5703569784957788254, guid: 1112a721fc6a40f40a0fa71f434cebc2, type: 3}
   minCoins: 1
   maxCoins: 4
   coinSpawnZ: -50
   chopSound: {fileID: 8300000, guid: b3913210e3a39c2479effe0dee48e432, type: 3}
+  seedRadius: 0.7
 --- !u!212 &857613496
 SpriteRenderer:
   serializedVersion: 2
@@ -6066,11 +6067,13 @@ MonoBehaviour:
   seedPrefab: {fileID: 1824206876322940066, guid: 521b1042547b674418d16781e764db5a, type: 3}
   minSeeds: 5
   maxSeeds: 5
+  treeScale: {x: 0.43, y: 0.43, z: 1}
   coinPrefab: {fileID: 5703569784957788254, guid: 1112a721fc6a40f40a0fa71f434cebc2, type: 3}
   minCoins: 1
   maxCoins: 4
   coinSpawnZ: -50
   chopSound: {fileID: 8300000, guid: b3913210e3a39c2479effe0dee48e432, type: 3}
+  seedRadius: 0.7
 --- !u!212 &936915831
 SpriteRenderer:
   serializedVersion: 2
@@ -6533,7 +6536,7 @@ PrefabInstance:
     - target: {fileID: 3405260010198141080, guid: e1cbba73ac0764041998e102f2955de5, type: 3}
       propertyPath: currentCheckpoint
       value: 
-      objectReference: {fileID: 850851528}
+      objectReference: {fileID: 1662074388}
     - target: {fileID: 4240267400719566282, guid: e1cbba73ac0764041998e102f2955de5, type: 3}
       propertyPath: m_Name
       value: CheckpointManager
@@ -6774,11 +6777,13 @@ MonoBehaviour:
   seedPrefab: {fileID: 1824206876322940066, guid: 521b1042547b674418d16781e764db5a, type: 3}
   minSeeds: 5
   maxSeeds: 5
+  treeScale: {x: 0.43, y: 0.43, z: 1}
   coinPrefab: {fileID: 5703569784957788254, guid: 1112a721fc6a40f40a0fa71f434cebc2, type: 3}
   minCoins: 1
   maxCoins: 4
   coinSpawnZ: -50
   chopSound: {fileID: 8300000, guid: b3913210e3a39c2479effe0dee48e432, type: 3}
+  seedRadius: 0.7
 --- !u!212 &1116866387
 SpriteRenderer:
   serializedVersion: 2
@@ -8411,11 +8416,13 @@ MonoBehaviour:
   seedPrefab: {fileID: 1824206876322940066, guid: 521b1042547b674418d16781e764db5a, type: 3}
   minSeeds: 5
   maxSeeds: 5
+  treeScale: {x: 0.43, y: 0.43, z: 1}
   coinPrefab: {fileID: 5703569784957788254, guid: 1112a721fc6a40f40a0fa71f434cebc2, type: 3}
   minCoins: 1
   maxCoins: 4
   coinSpawnZ: -50
   chopSound: {fileID: 8300000, guid: b3913210e3a39c2479effe0dee48e432, type: 3}
+  seedRadius: 0.7
 --- !u!212 &1407251899
 SpriteRenderer:
   serializedVersion: 2
@@ -9183,11 +9190,13 @@ MonoBehaviour:
   seedPrefab: {fileID: 1824206876322940066, guid: 521b1042547b674418d16781e764db5a, type: 3}
   minSeeds: 5
   maxSeeds: 5
+  treeScale: {x: 0.43, y: 0.43, z: 1}
   coinPrefab: {fileID: 5703569784957788254, guid: 1112a721fc6a40f40a0fa71f434cebc2, type: 3}
   minCoins: 1
   maxCoins: 4
   coinSpawnZ: -50
   chopSound: {fileID: 8300000, guid: b3913210e3a39c2479effe0dee48e432, type: 3}
+  seedRadius: 0.7
 --- !u!212 &1511418831
 SpriteRenderer:
   serializedVersion: 2
@@ -10727,6 +10736,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6108184503489119086}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1662074388 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6164858942900728464, guid: e1cbba73ac0764041998e102f2955de5, type: 3}
+  m_PrefabInstance: {fileID: 1078399206}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1671153041
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11030,11 +11044,13 @@ MonoBehaviour:
   seedPrefab: {fileID: 1824206876322940066, guid: 521b1042547b674418d16781e764db5a, type: 3}
   minSeeds: 5
   maxSeeds: 5
+  treeScale: {x: 0.43, y: 0.43, z: 1}
   coinPrefab: {fileID: 5703569784957788254, guid: 1112a721fc6a40f40a0fa71f434cebc2, type: 3}
   minCoins: 1
   maxCoins: 4
   coinSpawnZ: -50
   chopSound: {fileID: 8300000, guid: b3913210e3a39c2479effe0dee48e432, type: 3}
+  seedRadius: 0.7
 --- !u!212 &1736911042
 SpriteRenderer:
   serializedVersion: 2
@@ -12447,11 +12463,13 @@ MonoBehaviour:
   seedPrefab: {fileID: 1824206876322940066, guid: 521b1042547b674418d16781e764db5a, type: 3}
   minSeeds: 5
   maxSeeds: 5
+  treeScale: {x: 0.43, y: 0.43, z: 1}
   coinPrefab: {fileID: 5703569784957788254, guid: 1112a721fc6a40f40a0fa71f434cebc2, type: 3}
   minCoins: 1
   maxCoins: 4
   coinSpawnZ: -50
   chopSound: {fileID: 8300000, guid: b3913210e3a39c2479effe0dee48e432, type: 3}
+  seedRadius: 0.7
 --- !u!212 &1948463134
 SpriteRenderer:
   serializedVersion: 2

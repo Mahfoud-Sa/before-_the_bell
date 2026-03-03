@@ -7,8 +7,10 @@ public class TreeScript : MonoBehaviour
     public GameObject seedPrefab;     
     public int minSeeds = 1;          
     public int maxSeeds = 3;          
-[Header("Tree Size Settings")]
-public Vector3 treeScale = new Vector3(0.43f, 0.43f, 1f); // 👈 هنا تغير الحجم
+
+    [Header("Tree Size Settings")]
+    public Vector3 treeScale = new Vector3(0.20f, 0.20f, 1f); // حجم الشجرة
+
     [Header("Coins Settings")]
     public GameObject coinPrefab;     
     public int minCoins = 1;          
@@ -18,19 +20,21 @@ public Vector3 treeScale = new Vector3(0.43f, 0.43f, 1f); // 👈 هنا تغي�
     [Header("Audio")]
     public AudioClip chopSound;
 
+    [Header("Seed Distribution")]
+    public float seedRadius = 0.7f; // نصف القطر حول الشجرة
+
     private List<GameObject> currentSeeds = new List<GameObject>();
     private Vector3 originalScale;
     private bool isChopped = false;
 
     private void Start()
     {
-        // حفظ الحجم الأصلي للشجرة
-       // originalScale = transform.localScale;
-        // إذا كانت نسخة Clone
-    if (gameObject.name.Contains("(Clone)"))
-    {
-        transform.localScale = treeScale;  // 👈 هنا يتم ضبط الحجم
-    }
+        originalScale = transform.localScale;
+
+        if (gameObject.name.Contains("(Clone)"))
+        {
+            transform.localScale = treeScale;
+        }
     }
 
     private void OnMouseOver()
@@ -51,16 +55,13 @@ public Vector3 treeScale = new Vector3(0.43f, 0.43f, 1f); // 👈 هنا تغي�
     {
         isChopped = true;
 
-        // تشغيل صوت القطع
         if (chopSound != null)
         {
             AudioSource.PlayClipAtPoint(chopSound, Camera.main.transform.position);
         }
 
-        // إسقاط الغنائم
         DropLoot();
 
-        // تشغيل أنيميشن اللاعب
         if (player != null)
             player.StartActionAnim();
 
@@ -74,17 +75,19 @@ public Vector3 treeScale = new Vector3(0.43f, 0.43f, 1f); // 👈 هنا تغي�
         if (seedPrefab != null)
         {
             currentSeeds.Clear(); 
-
             int seedsToDrop = Random.Range(minSeeds, maxSeeds + 1);
 
             for (int i = 0; i < seedsToDrop; i++)
             {
                 Vector3 seedPos = transform.position;
 
-                // توزيع عشوائي بسيط
-                seedPos.x += Random.Range(-0.5f, 0.5f);
-                seedPos.y += Random.Range(0f, 0.5f);
-                seedPos.z -= 0.5f;
+                // توزيع البذور حول الشجرة في دائرة
+                float angle = 360f / seedsToDrop * i;
+                float rad = angle * Mathf.Deg2Rad;
+
+                seedPos.x += Mathf.Cos(rad) * seedRadius;
+                seedPos.y += Mathf.Sin(rad) * seedRadius;
+                seedPos.z = 0f; // ثابت Z = 0
 
                 GameObject spawnedSeed = Instantiate(seedPrefab, seedPos, Quaternion.identity);
 
@@ -92,6 +95,8 @@ public Vector3 treeScale = new Vector3(0.43f, 0.43f, 1f); // 👈 هنا تغي�
                 if (seedScript != null)
                 {
                     seedScript.originalTree = this.gameObject;
+                    seedScript.index = i;
+                    seedScript.totalSeeds = seedsToDrop;
                 }
 
                 currentSeeds.Add(spawnedSeed);
@@ -125,10 +130,7 @@ public Vector3 treeScale = new Vector3(0.43f, 0.43f, 1f); // 👈 هنا تغي�
         }
 
         currentSeeds.Clear();
-
-        // إرجاع الحجم الأصلي
         transform.localScale = originalScale;
-
         isChopped = false;
     }
 }
