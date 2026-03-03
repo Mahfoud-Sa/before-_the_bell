@@ -1482,7 +1482,7 @@ GameObject:
   - component: {fileID: 332332092}
   - component: {fileID: 332332091}
   m_Layer: 5
-  m_Name: StarsImage (2)
+  m_Name: Star3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5866,7 +5866,7 @@ GameObject:
   - component: {fileID: 917123005}
   - component: {fileID: 917123004}
   m_Layer: 5
-  m_Name: StarsImage
+  m_Name: Star1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8048,7 +8048,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1401350186}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1271333594}
+        m_TargetAssemblyTypeName: EndGameUI, Assembly-CSharp
+        m_MethodName: RetryLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1401350186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8324,7 +8336,7 @@ GameObject:
   - component: {fileID: 1426881188}
   - component: {fileID: 1426881187}
   m_Layer: 5
-  m_Name: StarsImage (1)
+  m_Name: Star2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11051,7 +11063,7 @@ Transform:
   m_GameObject: {fileID: 1788485034}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 507.1, y: -1.28, z: 0}
+  m_LocalPosition: {x: 1209.5, y: -1.28, z: 0}
   m_LocalScale: {x: 1.9805694, y: 1.9805694, z: 1.9805694}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -31290,11 +31302,13 @@ SceneRoots:
   - {fileID: 1626882802}
   - {fileID: 2018949788}
   - {fileID: 3687788232573871657}
+  - {fileID: 1806256853}
   - {fileID: 283724911}
   - {fileID: 1299443386}
   - {fileID: 1671153041}
   - {fileID: 807088343}
   - {fileID: 510317455}
+  - {fileID: 340740815}
   - {fileID: 1138232665}
   - {fileID: 1518856180}
   - {fileID: 1756905843}
@@ -31302,11 +31316,9 @@ SceneRoots:
   - {fileID: 1845990500}
   - {fileID: 1465824906}
   - {fileID: 3711631309478916075}
-  - {fileID: 340740815}
   - {fileID: 746525877}
   - {fileID: 761010661}
   - {fileID: 662334985}
-  - {fileID: 1806256853}
   - {fileID: 1437522609}
   - {fileID: 1719083146}
   - {fileID: 740246161}

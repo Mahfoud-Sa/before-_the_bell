@@ -5,29 +5,23 @@ public class WinScript : MonoBehaviour
     public GameObject winPanel;
     public GameObject hintOfWin;
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
+{
+    Debug.Log("OnTriggerEnter called with: " + other.name);
+
+    if (other.CompareTag("Player"))
     {
-        if (other.CompareTag("Player"))
-        {
-            Debug.Log("Player entered win trigger");
-  if (winPanel != null)
-                    winPanel.SetActive(true);
-            if (hintOfWin != null)
-                hintOfWin.SetActive(true);
-
-            ItemCollector collector = other.GetComponent<ItemCollector>();
-            if (collector != null && collector.CheckWinStatus())
-            {
-                if (hintOfWin != null)
-                    hintOfWin.SetActive(false);
-
-                if (winPanel != null)
-                    winPanel.SetActive(true);
-
-                Time.timeScale = 0f;
-            }
-        }
+       
+       
+        winPanel.SetActive(true); // Show the win panel
+         GameManager.Instance.WinGame();
+        // Step 2: Show Win Panel
+        // WinPanelUI winPanel = 
+       // GameManager.Instance.WinGame(); // reference assigned in Inspector
+        // if (winPanel != null)
+        //     winPanel.ShowPanel();
     }
+}
 
     private void OnTriggerExit(Collider other)
     {
