@@ -4,10 +4,18 @@ using TMPro;
 public class Timer : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI timerText;
-    [SerializeField] float remainingTime;
-    [SerializeField] AudioSource bellSound; // Add this to play the bell sound
-    [SerializeField] bool soundPlayed = false; // To ensure sound only plays once
+    //[SerializeField] float remainingTime;
+    float remainingTime;
+    //[SerializeField] AudioSource bellSound; // Add this to play the bell sound
+    //[SerializeField] bool soundPlayed = false; // To ensure sound only plays once
+    void Start()
+    {
+        remainingTime = GameManager.Instance.gameTime;
+        
 
+        
+       
+    }
     // Update is called once per frame
     void Update()
     {
@@ -17,17 +25,12 @@ public class Timer : MonoBehaviour
         }
 
         // Check if timer has reached zero and sound hasn't been played yet
-        if (remainingTime <= 0 && !soundPlayed)
+        if (remainingTime <= 0)
         {
             remainingTime = 0;
          
 
-            // Play the bell sound if AudioSource is assigned
-            if (bellSound != null)
-            {
-                bellSound.Play();
-                soundPlayed = true; // Mark sound as played to prevent repeated playing
-            }
+            SoundManager.Instance?.PlayBellSound(); // Play the bell sound using SoundManager
         }
 
         int minutes = Mathf.FloorToInt(remainingTime / 60);
