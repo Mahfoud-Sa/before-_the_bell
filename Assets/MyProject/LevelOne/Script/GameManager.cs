@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Stars System")]
     public int maxStars = 3;
-    public int currentStars = 1; // Player starts with 1 star
+    public int currentStars = 2; // Player starts with 2 star
 
     // Optional flags for star logic
     public bool usedEffect = false;
@@ -104,20 +104,18 @@ public class GameManager : MonoBehaviour
         EndGameUI.Instance.ShowGameOver();
     }
 
-    public void WinGame()
+   public void WinGame()
     {
+        Debug.Log("WinGame called in GameManager");
         if (gameEnded) return;
 
         gameEnded = true;
 
-        // ⭐ Star Calculation Example
         if (usedEffect)
             LoseStar();
 
         if (boughtFromStore)
             AddStar();
-
-        EndGameUI.Instance.ShowWin(); // Win panel reads currentStars
 
         Time.timeScale = 0f;
     }

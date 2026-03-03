@@ -85,6 +85,14 @@ public class CheckpointManager : MonoBehaviour
     // استدعِ هذه الدالة عندما تريد إعادة اللاعب
     public void Respawn()
     {
+        if (GameManager.Instance != null)
+        {
+            if (GameManager.Instance.currentStars ==2)
+            { 
+                GameManager.Instance.LoseStar();              
+            }
+        }
+       
         if (currentCheckpoint == null)
         {
             Debug.LogWarning("[CheckpointManager] Respawn called but no checkpoint set.");
