@@ -6922,6 +6922,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 63158863800929530, guid: ed4431bf447960344831e3941cb05f42, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ee277494130dc9b4e86f7407197624bc, type: 3}
+    - target: {fileID: 63158863800929530, guid: ed4431bf447960344831e3941cb05f42, type: 3}
       propertyPath: m_PreserveAspect
       value: 1
       objectReference: {fileID: 0}
@@ -6979,19 +6983,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3946715689780024473, guid: ed4431bf447960344831e3941cb05f42, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4243939406234231410, guid: ed4431bf447960344831e3941cb05f42, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4243939406234231410, guid: ed4431bf447960344831e3941cb05f42, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 800
+      objectReference: {fileID: 0}
+    - target: {fileID: 4243939406234231410, guid: ed4431bf447960344831e3941cb05f42, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.00010303467
       objectReference: {fileID: 0}
     - target: {fileID: 4243939406234231410, guid: ed4431bf447960344831e3941cb05f42, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -69
+      value: -0.0000076293945
+      objectReference: {fileID: 0}
+    - target: {fileID: 4398213628162928378, guid: ed4431bf447960344831e3941cb05f42, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 391
       objectReference: {fileID: 0}
     - target: {fileID: 4398213628162928378, guid: ed4431bf447960344831e3941cb05f42, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -240
+      value: -43
       objectReference: {fileID: 0}
     - target: {fileID: 9072870380277902273, guid: ed4431bf447960344831e3941cb05f42, type: 3}
       propertyPath: m_Name
-      value: InfoTrigger (1)
+      value: CutCornInfoPanel
       objectReference: {fileID: 0}
     - target: {fileID: 9115307138956131600, guid: ed4431bf447960344831e3941cb05f42, type: 3}
       propertyPath: m_LocalRotation.x
