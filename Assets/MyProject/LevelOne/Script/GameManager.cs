@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance;
+
     [Header("Settings")]
     public GameObject settingsPanel;
     private bool isSettingsOpen = false;
@@ -13,13 +15,22 @@ public class GameManager : MonoBehaviour
 
     [Header("Stars System")]
     public int maxStars = 3;
-    public int currentStars = 2; // Player starts with 2 star
+    public int currentStars = 2; // Player starts with 2 stars
 
     // Optional flags for star logic
     public bool usedEffect = false;
     public bool boughtFromStore = false;
 
-    public static GameManager Instance;
+    // ---------------- TREE SYSTEM ----------------
+
+    [Header("Tree System")]
+    [Tooltip("Set how many trees must be chopped to open the wall")]
+    public int remainingTrees = 3;   // 👈 Set this manually in Inspector
+
+    public GameObject treeWall;      // 👈 Assign the wall here
+
+
+    // ---------------- UNITY METHODS ----------------
 
     void Awake()
     {
@@ -48,6 +59,32 @@ public class GameManager : MonoBehaviour
         {
             GameOver();
         }
+    }
+
+    // ---------------- TREE LOGIC ----------------
+
+    public void DecreaseTreeCount()
+    {
+        if (gameEnded) return;
+
+        remainingTrees--;
+
+        Debug.Log("Remaining Trees: " + remainingTrees);
+
+        if (remainingTrees <= 0)
+        {
+            OpenWall();
+        }
+    }
+
+    private void OpenWall()
+    {
+        if (treeWall != null)
+        {
+            treeWall.SetActive(false);
+        }
+
+        Debug.Log("Wall Opened!");
     }
 
     // ---------------- SETTINGS ----------------
@@ -101,12 +138,16 @@ public class GameManager : MonoBehaviour
         if (gameEnded) return;
 
         gameEnded = true;
-        EndGameUI.Instance.ShowGameOver();
+        Time.timeScale = 0f;
+
+        if (EndGameUI.Instance != null)
+            EndGameUI.Instance.ShowGameOver();
     }
 
-   public void WinGame()
+    public void WinGame()
     {
         Debug.Log("WinGame called in GameManager");
+
         if (gameEnded) return;
 
         gameEnded = true;

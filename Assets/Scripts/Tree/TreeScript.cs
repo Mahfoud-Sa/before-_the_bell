@@ -54,7 +54,11 @@ public class TreeScript : MonoBehaviour
     void ChopTree(playerMove player)
     {
         isChopped = true;
-
+ // 🔥 INFORM GAMEMANAGER HERE
+    if (GameManager.Instance != null)
+    {
+        GameManager.Instance.DecreaseTreeCount();
+    }
         if (chopSound != null)
         {
             AudioSource.PlayClipAtPoint(chopSound, Camera.main.transform.position);
