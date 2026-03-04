@@ -182,9 +182,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CheckpointSystem
   player: {fileID: 0}
   playerRb: {fileID: 0}
-  blinkCount: 5
+  blinkCount: 1
   blinkInterval: 0.18
-  currentCheckpoint: {fileID: 53852179653781855}
+  currentCheckpoint: {fileID: 6164858942900728464}
   startCheckpoint: {fileID: 1638700266483548082}
 --- !u!1 &4395364779474846642
 GameObject:
@@ -213,7 +213,7 @@ Transform:
   m_GameObject: {fileID: 4395364779474846642}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -159.31, y: 0.76, z: -59.63}
+  m_LocalPosition: {x: -159.31, y: 0.76, z: -59.32}
   m_LocalScale: {x: 1, y: 5.9725213, z: 8.366218}
   m_ConstrainProportionsScale: 0
   m_Children: []
