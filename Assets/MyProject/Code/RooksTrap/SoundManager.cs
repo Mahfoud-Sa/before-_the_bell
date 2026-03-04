@@ -120,7 +120,7 @@ public class SoundManager : MonoBehaviour
     public void PlayComingRockSound() => PlayRockSounds(comingStone);
     public void PlaySmallRock() => PlayRockSounds(smallRockImpact);
     public void PlayBigRock() => PlaySFX(bigRockImpact);
-    public void PlayAfterFallingStones() => PlaySFX(afterFallingStone);
+    public void PlayAfterFallingStones() => PlayRiverSounds(afterFallingStone);
     // ---------- Coin----------
     public void PlayCoin() => PlaySFX(coinPickupSound);
     // ---------- Gots----------

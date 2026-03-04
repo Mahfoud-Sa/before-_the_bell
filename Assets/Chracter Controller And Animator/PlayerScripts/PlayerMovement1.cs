@@ -75,13 +75,14 @@ public class PlayerMovement1 : AnimatorCoder
     {
         if (GetBool(Parameters.GROUNDED) && (Input.GetKeyDown(KeyCode.Space) || _jumpPressed))
         {
-            SoundManager.Instance?.PlayJump();
+            
             rb.linearVelocity = new(rb.linearVelocity.x, jumpHeight);
             isJumping = true;
             jumpCounter = 0;
-
+           
             //Play(new(Animations.OneFrameJump, true));
             Play(new(Animations.Run_Jump1, true));
+            SoundManager.Instance.PlayJump();
         }
 
         if (rb.linearVelocity.y > 0 && isJumping)
@@ -99,7 +100,7 @@ public class PlayerMovement1 : AnimatorCoder
             rb.linearVelocity += vecGravity * currentJumpM * Time.deltaTime;
         }
 
-        if (Input.GetKeyUp(KeyCode.Space) || _jumpPressed) 
+        if (Input.GetKeyUp(KeyCode.Space) && !_jumpPressed) 
         {
             isJumping = false;
             jumpCounter = 0;
@@ -109,6 +110,7 @@ public class PlayerMovement1 : AnimatorCoder
                 rb.linearVelocity = new Vector3(rb.linearVelocity.x,rb.linearVelocity.y * 0.2f, 0);
             }
         }
+       
 
         if (rb.linearVelocity.y < 0)
         {
