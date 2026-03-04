@@ -28,7 +28,7 @@ public class CheckpointManager : MonoBehaviour
     {
         // محاولة تلقائية لإيجاد اللاعب إذا لم يكن مرتبطاً في الـ Inspector
         SoundManager.Instance.PlayBellSound();
-        AutoAssignPlayerIfMissing();
+        //AutoAssignPlayerIfMissing();
         if (currentCheckpoint == null) player.position = startCheckpoint.position;
         if (currentCheckpoint != null)
             player.position = currentCheckpoint.position;

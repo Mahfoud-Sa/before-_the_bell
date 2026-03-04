@@ -61,6 +61,7 @@ public class PlayerMovement1 : AnimatorCoder
 
     private void FixedUpdate()
     {
+        
         rb.linearVelocity = new(movementSpeed * movement, rb.linearVelocity.y);
         SetBool(Parameters.GROUNDED, Physics.CheckSphere(groundCheck.position, groundDistance, groundMask));
         SetBool(Parameters.FALLING, !GetBool(Parameters.GROUNDED) && rb.linearVelocity.y < 0);
@@ -74,6 +75,7 @@ public class PlayerMovement1 : AnimatorCoder
     {
         if (GetBool(Parameters.GROUNDED) && (Input.GetKeyDown(KeyCode.Space) || _jumpPressed))
         {
+            SoundManager.Instance?.PlayJump();
             rb.linearVelocity = new(rb.linearVelocity.x, jumpHeight);
             isJumping = true;
             jumpCounter = 0;
@@ -117,10 +119,23 @@ public class PlayerMovement1 : AnimatorCoder
    
     public override void DefaultAnimation(int layer)
     {
-        if (movement == 0) Play(new(Animations.Idle1));
-        else Play(new(Animations.Running1));
+        if (movement == 0)
+        {
+            SoundManager.Instance?.StopRunSound();
+            Play(new(Animations.Idle1));
+        }
+        else
+        {
+            SoundManager.Instance?.StartRunSound();
+            Play(new(Animations.Running1));
+        }
 
-        if (movement != 0) sprite.flipX = movement > 0;
+        if (movement != 0)
+        {
+            sprite.flipX = movement > 0;
+          
+        }
+        
 
 
         //if (movement != 0) sprite.flipX = movement > 0;
