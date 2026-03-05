@@ -16,7 +16,9 @@ public class StoryManager : MonoBehaviour
     {
         // Make sure button is hidden at start
         if (endButton != null)
-            endButton.SetActive(false);
+            endButton.SetActive(true);
+            endButton.GetComponent<Button>().interactable = false; 
+
     }
 
     void Update()

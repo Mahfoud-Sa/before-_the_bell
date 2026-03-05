@@ -1,39 +1,36 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayButtonScript : MonoBehaviour
 {
-   // public StoryManager storyManager;
     private Button button;
 
     void Start()
     {
         button = GetComponent<Button>();
-        button.interactable = true; // الزر غير قابل للضغط بالبداية
+        button.interactable = false; // الزر غير قابل للضغط بالبداية
     }
-
-    // void Update()
-    // {
-    //     if (storyManager != null && storyManager.storyCompleted)
-    //     {
-    //         button.interactable = true; // تفعيل الزر عندما تنتهي القصة
-    //     }
-    // }
 
     public void PlayGame()
     {
-      //  if (storyManager != null )
-         //   return; // لا يسمح بالدخول إذا لم تنته القصة
-    Debug.Log("Play button pressed ");
+        Debug.Log("Play button pressed");
 
         if (LoadingManager.Instance != null)
         {
+            // Use the LoadingManager to load scene 2 with panel and animation
             LoadingManager.Instance.LoadScene(2);
         }
         else
         {
-            SceneManager.LoadScene(2);
+            // Fallback if LoadingManager is missing
+            UnityEngine.SceneManagement.SceneManager.LoadScene(2);
         }
+    }
+
+    // Optional: you can add a method to enable button after story completes
+    public void EnableButton()
+    {
+        if (button != null)
+            button.interactable = true;
     }
 }

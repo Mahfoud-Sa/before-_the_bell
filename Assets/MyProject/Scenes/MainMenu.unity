@@ -1356,7 +1356,6 @@ GameObject:
   - component: {fileID: 965531725}
   - component: {fileID: 965531724}
   - component: {fileID: 965531723}
-  - component: {fileID: 965531727}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1482,18 +1481,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &965531727
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 965531722}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ffef21591a323647bb8592d23f6c5c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayButtonScript
 --- !u!1 &978146378
 GameObject:
   m_ObjectHideFlags: 0
@@ -1577,6 +1564,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1043034823850041535, guid: 7564ecd127ccb96438a8b756511dd4af, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1807481707766835561, guid: 7564ecd127ccb96438a8b756511dd4af, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3055070575771505906, guid: 7564ecd127ccb96438a8b756511dd4af, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1663,7 +1658,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9138290408161302881, guid: 7564ecd127ccb96438a8b756511dd4af, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1974,7 +1969,6 @@ RectTransform:
   m_Children:
   - {fileID: 796606418}
   - {fileID: 2104957183}
-  - {fileID: 1298233952}
   - {fileID: 978146379}
   - {fileID: 472502008}
   - {fileID: 1380732225}
@@ -1983,6 +1977,7 @@ RectTransform:
   - {fileID: 1155535799}
   - {fileID: 2134042952}
   - {fileID: 328742964}
+  - {fileID: 1298233952}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2021,7 +2016,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1298233952
 RectTransform:
   m_ObjectHideFlags: 0
