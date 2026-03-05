@@ -7,13 +7,21 @@ public class StoryManager : MonoBehaviour
     public GameObject[] panels; 
     public int transitionIndex = 4;
 
-    public bool storyCompleted = false; // لمعرفة هل انتهت القصة
+    // Drag your button here in the Inspector
+    public GameObject endButton;
 
     private int currentIndex = 0;
 
+    void Start()
+    {
+        // Make sure button is hidden at start
+        if (endButton != null)
+            endButton.SetActive(false);
+    }
+
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !storyCompleted)
+        if (Input.GetMouseButtonDown(0))
         {
             ShowNext();
         }
@@ -24,12 +32,20 @@ public class StoryManager : MonoBehaviour
         currentIndex++;
 
         // إذا وصلنا لنهاية القصة
-        if (currentIndex >= panels.Length)
-        {
-            storyCompleted = true;
-            Debug.Log("Story Completed");
-            return;
-        }
+       if (currentIndex >= 8)
+{
+    Debug.Log("Story Completed");
+
+    if (endButton != null)
+    {
+        endButton.SetActive(true);        // Make it visible
+        Button btn = endButton.GetComponent<Button>();
+        if (btn != null)
+            btn.interactable = true;      // Make it clickable
+    }
+
+    return;
+}
 
         // بداية الصفحة الثانية
         if (currentIndex == transitionIndex)

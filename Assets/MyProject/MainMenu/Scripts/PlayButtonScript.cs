@@ -4,27 +4,28 @@ using UnityEngine.UI;
 
 public class PlayButtonScript : MonoBehaviour
 {
-    public StoryManager storyManager;
+   // public StoryManager storyManager;
     private Button button;
 
     void Start()
     {
         button = GetComponent<Button>();
-        button.interactable = false; // الزر غير قابل للضغط بالبداية
+        button.interactable = true; // الزر غير قابل للضغط بالبداية
     }
 
-    void Update()
-    {
-        if (storyManager != null && storyManager.storyCompleted)
-        {
-            button.interactable = true; // تفعيل الزر عندما تنتهي القصة
-        }
-    }
+    // void Update()
+    // {
+    //     if (storyManager != null && storyManager.storyCompleted)
+    //     {
+    //         button.interactable = true; // تفعيل الزر عندما تنتهي القصة
+    //     }
+    // }
 
     public void PlayGame()
     {
-        if (storyManager != null && !storyManager.storyCompleted)
-            return; // لا يسمح بالدخول إذا لم تنته القصة
+      //  if (storyManager != null )
+         //   return; // لا يسمح بالدخول إذا لم تنته القصة
+    Debug.Log("Play button pressed ");
 
         if (LoadingManager.Instance != null)
         {
