@@ -1,11 +1,9 @@
 using UnityEngine;
 
-public class Togen : MonoBehaviour
+public class ToggleLevelsMenuScript : MonoBehaviour
 {
         public GameObject levelMenuPanel;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-     public void ToggleLevelsMenu()
+      public void ToggleLevelsMenu()
     {
         if (levelMenuPanel != null)
         {
@@ -17,7 +15,7 @@ public class Togen : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("SettingsMenuPanel is not assigned in the Inspector!");
+            Debug.LogWarning("levelMenuPanel is not assigned in the Inspector!");
         }
     }
 }

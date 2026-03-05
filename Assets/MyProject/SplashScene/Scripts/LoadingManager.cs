@@ -65,26 +65,38 @@ public class LoadingManager : MonoBehaviour
     }
 
     private IEnumerator LoadSceneRoutine(int sceneIndex)
+{
+    if (loadingPanel != null)
+        loadingPanel.SetActive(true);
+
+    float timer = 0f;
+
+    AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex);
+    operation.allowSceneActivation = false;
+
+    // Wait until scene is fully loaded (0.9f)
+    while (operation.progress < 0.9f)
     {
-        if (loadingPanel != null)
-            loadingPanel.SetActive(true);
-
-        float timer = 0f;
-
-        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex);
-        operation.allowSceneActivation = false;
-
-        while (!operation.isDone || timer < minDisplayTime)
-        {
-            timer += Time.deltaTime;
-
-            if (operation.progress >= 0.9f && timer >= minDisplayTime)
-                operation.allowSceneActivation = true;
-
-            yield return null;
-        }
-
-        if (loadingPanel != null)
-            loadingPanel.SetActive(false);
+        yield return null;
     }
+
+    // Wait minimum display time
+    while (timer < minDisplayTime)
+    {
+        timer += Time.deltaTime;
+        yield return null;
+    }
+
+    // Now activate scene
+    operation.allowSceneActivation = true;
+
+    // Wait until fully done
+    while (!operation.isDone)
+    {
+        yield return null;
+    }
+
+    if (loadingPanel != null)
+        loadingPanel.SetActive(false);
+}
 }
