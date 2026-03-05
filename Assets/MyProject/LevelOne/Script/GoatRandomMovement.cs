@@ -5,12 +5,15 @@ public class GoatRandomMovement : MonoBehaviour
     public float moveSpeed = 3f;
     public float changeDirectionTime = 3f;
 
+    // X axis limits
+    public float startPositionX = -5f;
+    public float endPositionX = 5f;
+
     private Rigidbody rb;
     private Vector3 movement;
     private float timer;
 
     private bool isHeld = false;
-
     private Collider col;
 
     void Start()
@@ -37,7 +40,12 @@ public class GoatRandomMovement : MonoBehaviour
         if (isHeld) return;
 
         Vector3 move = movement * moveSpeed * Time.fixedDeltaTime;
-        rb.MovePosition(rb.position + move);
+        Vector3 newPosition = rb.position + move;
+
+        // Clamp X position
+        newPosition.x = Mathf.Clamp(newPosition.x, startPositionX, endPositionX);
+
+        rb.MovePosition(newPosition);
 
         if (movement != Vector3.zero)
         {
@@ -48,10 +56,18 @@ public class GoatRandomMovement : MonoBehaviour
 
     void ChangeDirection()
     {
-        movement = new Vector3(Random.Range(-1f, 1f), 0f, Random.Range(-1f, 1f)).normalized;
+        float randomX = Random.Range(-1f, 1f);
+
+        // Prevent movement outside the range
+        if (transform.position.x <= startPositionX && randomX < 0)
+            randomX = Mathf.Abs(randomX);
+
+        if (transform.position.x >= endPositionX && randomX > 0)
+            randomX = -Mathf.Abs(randomX);
+
+        movement = new Vector3(randomX, 0f, Random.Range(-1f, 1f)).normalized;
     }
 
-    // ✅ Hold Function — Called when player picks goat
     public void Hold(Transform holdPoint)
     {
         isHeld = true;
@@ -60,14 +76,13 @@ public class GoatRandomMovement : MonoBehaviour
         rb.isKinematic = true;
         rb.useGravity = false;
 
-        col.enabled = false; // prevent physics clash
+        col.enabled = false;
 
         transform.SetParent(holdPoint);
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
     }
 
-    // ✅ Drop Function — optional, can be called later
     public void Drop()
     {
         isHeld = false;
