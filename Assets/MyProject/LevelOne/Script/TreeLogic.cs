@@ -48,16 +48,19 @@ public class PalmBridge : MonoBehaviour
         }
     }
 
-    void StartFalling()
-    {
-        hasFallen = true;
-        rb.isKinematic = false;
+void StartFalling()
+{
+    hasFallen = true;
 
-        rb.constraints = RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+    rb.isKinematic = false;
+    rb.useGravity = true;
 
-        rb.AddForce(transform.forward * 10f, ForceMode.Impulse);
-        rb.AddTorque(transform.right * 15f, ForceMode.Impulse);
+    rb.constraints = RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
 
-        Debug.Log("Tree cut using Axe and falling!");
-    }
+    Vector3 fallAxis = Vector3.Cross(transform.forward, Vector3.up).normalized;
+
+    rb.AddTorque(fallAxis * 30f, ForceMode.Impulse);
+
+    Debug.Log("Tree falling forward correctly");
+}
 }
