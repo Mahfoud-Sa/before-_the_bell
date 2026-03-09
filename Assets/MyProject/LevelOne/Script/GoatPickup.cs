@@ -8,9 +8,6 @@ public class GoatPickup : MonoBehaviour
     private bool isPlayerTouching = false;
     private bool isHeld = false;
 
-    [Header("Tool Settings")]
-    public string requiredToolName = "Gradle";
-
     [Header("Hold Settings")]
     public Transform holdPosition;
 
@@ -24,13 +21,14 @@ public class GoatPickup : MonoBehaviour
     {
         if (isPlayerTouching && !isHeld)
         {
-            if (AdvancedToolManager.currentToolName == requiredToolName)
-            {
+            
+            //if (Input.GetKeyDown(KeyCode.E))
+            //{
                 PickUpGoat();
-            }
+            //}
         }
 
-        if (isHeld)
+        if (isHeld && holdPosition != null)
         {
             transform.position = holdPosition.position;
             transform.rotation = holdPosition.rotation;
@@ -43,32 +41,20 @@ public class GoatPickup : MonoBehaviour
 
         isHeld = true;
 
-        rb.isKinematic = true;
+        rb.isKinematic = false;
         rb.useGravity = false;
 
         transform.SetParent(holdPosition);
         transform.localPosition = Vector3.zero;
 
-        // Stop animation
         if (animator != null)
         {
             animator.enabled = false;
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public void SetPlayerTouching(bool state)
     {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            isPlayerTouching = true;
-        }
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            isPlayerTouching = false;
-        }
+        isPlayerTouching = state;
     }
 }

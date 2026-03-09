@@ -1,71 +1,129 @@
 using UnityEngine;
 
-public class GoatRandomMovement : MonoBehaviour
+public class GoatWanderAI : MonoBehaviour
 {
+    [Header("Movement Settings")]
     public float moveSpeed = 3f;
-    public float changeDirectionTime = 3f;
+    public float movementRange = 5f;
 
-    // X axis limits
-    public float startPositionX = -5f;
-    public float endPositionX = 5f;
+    [Header("Random Walk / Idle Time")]
+    public float minWalkTime = 4f;
+    public float maxWalkTime = 7f;
+    public float minIdleTime = 1f;
+    public float maxIdleTime = 3f;
+
+    [Header("Flip Target")]
+    [Tooltip("Drag the object that should flip when the goat changes direction")]
+    public Transform flippedGameObject;
 
     private Rigidbody rb;
-    private Vector3 movement;
-    private float timer;
 
+    private bool isWalking = true;
     private bool isHeld = false;
-    private Collider col;
+
+    private float timer = 0f;
+    private float currentStateTime = 0f;
+
+    private int direction = 1;
+
+    private Vector3 startPos;
+    private float fixedZ;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        col = GetComponent<Collider>();
-        ChangeDirection();
-    }
 
-    void Update()
-    {
-        if (isHeld) return;
+        startPos = transform.position;
+        fixedZ = transform.position.z;
 
-        timer += Time.deltaTime;
-        if (timer >= changeDirectionTime)
-        {
-            ChangeDirection();
-            timer = 0f;
-        }
+        rb.constraints = RigidbodyConstraints.FreezeRotation |
+                         RigidbodyConstraints.FreezePositionZ;
+
+        SetRandomWalkTime();
+        PickNewDirection();
     }
 
     void FixedUpdate()
     {
         if (isHeld) return;
 
-        Vector3 move = movement * moveSpeed * Time.fixedDeltaTime;
-        Vector3 newPosition = rb.position + move;
+        timer += Time.fixedDeltaTime;
 
-        // Clamp X position
-        newPosition.x = Mathf.Clamp(newPosition.x, startPositionX, endPositionX);
-
-        rb.MovePosition(newPosition);
-
-        if (movement != Vector3.zero)
+        if (isWalking)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(movement);
-            rb.rotation = Quaternion.Slerp(rb.rotation, targetRotation, 10f * Time.fixedDeltaTime);
+            Move();
+
+            if (timer >= currentStateTime)
+                StopWalking();
         }
+        else
+        {
+            rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
+
+            if (timer >= currentStateTime)
+                StartWalking();
+        }
+
+        // Lock Z axis
+        transform.position = new Vector3(transform.position.x, transform.position.y, fixedZ);
     }
 
-    void ChangeDirection()
+    void Move()
     {
-        float randomX = Random.Range(-1f, 1f);
+        float xVelocity = moveSpeed * direction;
 
-        // Prevent movement outside the range
-        if (transform.position.x <= startPositionX && randomX < 0)
-            randomX = Mathf.Abs(randomX);
+        rb.linearVelocity = new Vector3(xVelocity, rb.linearVelocity.y, 0);
 
-        if (transform.position.x >= endPositionX && randomX > 0)
-            randomX = -Mathf.Abs(randomX);
+        FlipObject(direction);
 
-        movement = new Vector3(randomX, 0f, Random.Range(-1f, 1f)).normalized;
+        if (transform.position.x >= startPos.x + movementRange)
+        {
+            direction = -1;
+        }
+        else if (transform.position.x <= startPos.x - movementRange)
+        {
+            direction = 1;
+        }
+    }
+void FlipObject(int dir)
+{
+    if (flippedGameObject == null) return;
+
+    Vector3 scale = flippedGameObject.localScale;
+
+    // reversed flip
+    scale.x = Mathf.Abs(scale.x) * (dir < 0 ? 1 : -1);
+
+    flippedGameObject.localScale = scale;
+}
+
+    void PickNewDirection()
+    {
+        direction = Random.value > 0.5f ? 1 : -1;
+    }
+
+    void StopWalking()
+    {
+        isWalking = false;
+        timer = 0f;
+
+        currentStateTime = Random.Range(minIdleTime, maxIdleTime);
+
+        rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
+    }
+
+    void StartWalking()
+    {
+        isWalking = true;
+        timer = 0f;
+
+        SetRandomWalkTime();
+        PickNewDirection();
+    }
+
+    void SetRandomWalkTime()
+    {
+        currentStateTime = Random.Range(minWalkTime, maxWalkTime);
     }
 
     public void Hold(Transform holdPoint)
@@ -76,11 +134,8 @@ public class GoatRandomMovement : MonoBehaviour
         rb.isKinematic = true;
         rb.useGravity = false;
 
-        col.enabled = false;
-
         transform.SetParent(holdPoint);
         transform.localPosition = Vector3.zero;
-        transform.localRotation = Quaternion.identity;
     }
 
     public void Drop()
@@ -92,8 +147,6 @@ public class GoatRandomMovement : MonoBehaviour
         rb.isKinematic = false;
         rb.useGravity = true;
 
-        col.enabled = true;
-
-        ChangeDirection();
+        StartWalking();
     }
 }

@@ -25,10 +25,18 @@ public class GameManager : MonoBehaviour
 
     [Header("Tree System")]
     [Tooltip("Set how many trees must be chopped to open the wall")]
-    public int remainingTrees = 3;   // 👈 Set this manually in Inspector
+    public int remainingTrees = 3;
 
-    public GameObject treeWall;      // 👈 Assign the wall here
+    public GameObject treeWall;
 
+    // ---------------- GOAT SYSTEM ----------------
+
+    [Header("Goat System")]
+    [Tooltip("Current goats in the level")]
+    public int currentGoats = 0;
+
+    [Tooltip("Maximum goats allowed")]
+    public int maxGoats = 10;
 
     // ---------------- UNITY METHODS ----------------
 
@@ -85,6 +93,31 @@ public class GameManager : MonoBehaviour
         }
 
         Debug.Log("Wall Opened!");
+    }
+
+    // ---------------- GOAT LOGIC ----------------
+
+    public void AddGoat()
+    {
+        if (currentGoats < maxGoats)
+        {
+            currentGoats++;
+            Debug.Log("Goat Added. Total Goats: " + currentGoats);
+        }
+    }
+
+    public void RemoveGoat()
+    {
+        if (currentGoats > 0)
+        {
+            currentGoats--;
+            Debug.Log("Goat Removed. Remaining Goats: " + currentGoats);
+        }
+    }
+
+    public int GetGoatCount()
+    {
+        return currentGoats;
     }
 
     // ---------------- SETTINGS ----------------
