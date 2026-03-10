@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections; // أضفنا هذا السطر لاستخدام الـ Coroutine
 
 public class PalmBridge : MonoBehaviour
 {
@@ -7,22 +8,27 @@ public class PalmBridge : MonoBehaviour
     private bool isPlayerTouching = false;
 
     [Header("Tool Settings")]
-    public string requiredToolName = "Axe"; // MUST match the sprite name exactly
+    public string requiredToolName = "Axe";
+
+    [Header("Wood Spawn Settings")]
+    public GameObject woodLogPrefab; // اسحب بريفاب الحطب (الأزرق) هنا
+    public int woodCount = 3;        // عدد قطع الخشب التي ستظهر
+    public float delayBeforeTransform = 3f; // الوقت بالثواني قبل أن تتحول النخلة لحطب
+
+    [Header("VFX Settings")]
+    public GameObject dustEffectPrefab; // أضف هذا السطر هنا
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-
         rb.isKinematic = true;
         rb.useGravity = true;
     }
 
     void Update()
     {
-        // If player is touching AND tree didn't fall yet
         if (isPlayerTouching && !hasFallen)
         {
-            // Check if Axe is currently selected
             if (AdvancedToolManager.currentToolName == requiredToolName)
             {
                 StartFalling();
@@ -35,7 +41,6 @@ public class PalmBridge : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             isPlayerTouching = true;
-            Debug.Log("Player touching tree: " + gameObject.name);
         }
     }
 
@@ -44,23 +49,45 @@ public class PalmBridge : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             isPlayerTouching = false;
-            Debug.Log("Player left tree: " + gameObject.name);
         }
     }
 
-void StartFalling()
-{
-    hasFallen = true;
+    void StartFalling()
+    {
+        hasFallen = true;
+        rb.isKinematic = false;
+        rb.useGravity = true;
+        rb.constraints = RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
 
-    rb.isKinematic = false;
-    rb.useGravity = true;
+        Vector3 fallAxis = Vector3.Cross(transform.forward, Vector3.up).normalized;
+        rb.AddTorque(fallAxis * 30f, ForceMode.Impulse);
 
-    rb.constraints = RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+        Debug.Log("Tree falling... will turn to wood in " + delayBeforeTransform + " seconds");
 
-    Vector3 fallAxis = Vector3.Cross(transform.forward, Vector3.up).normalized;
+        // استدعاء وظيفة التحويل بعد وقت معين
+        StartCoroutine(ConvertToWood());
+    }
 
-    rb.AddTorque(fallAxis * 30f, ForceMode.Impulse);
+    IEnumerator ConvertToWood()
+    {
+        // انتظر الوقت المحدد (مثلاً 3 ثوانٍ حتى تستقر النخلة على الأرض)
+        yield return new WaitForSeconds(delayBeforeTransform);
 
-    Debug.Log("Tree falling forward correctly");
-}
+        // إنشاء قطع الحطب
+        for (int i = 0; i < woodCount; i++)
+        {
+            // نضع الخشب في نفس مكان النخلة مع رفع بسيط لكل قطعة
+            Vector3 spawnPos = transform.position + new Vector3(Random.Range(-0.5f, 0.5f), i * 0.5f, Random.Range(-0.5f, 0.5f));
+            Instantiate(woodLogPrefab, spawnPos, Random.rotation);
+        }
+        // إنشاء تأثير غبار في مكان النخلة عند اختفائها
+        if (dustEffectPrefab != null)
+        {
+            Instantiate(dustEffectPrefab, transform.position, Quaternion.identity);
+        }
+
+        // حذف النخلة من المشهد
+        Destroy(gameObject);
+    }
+   
 }
