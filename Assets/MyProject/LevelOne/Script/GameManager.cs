@@ -3,6 +3,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+ public int coins = 0;
 
     [Header("Settings")]
     public GameObject settingsPanel;
@@ -39,10 +40,22 @@ public class GameManager : MonoBehaviour
     public int maxGoats = 10;
 
     // ---------------- UNITY METHODS ----------------
-
-    void Awake()
+    public void AddCoins(int amount)
     {
-        Instance = this;
+        coins += amount;
+        Debug.Log($"💰 Coins: {coins}");
+
+        // Update UI
+        if (UIManager.Instance != null)
+            UIManager.Instance.UpdateCoinsText(coins);
+    }
+    private void Awake()
+    {
+        // Singleton pattern
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
     }
 
     void Start()

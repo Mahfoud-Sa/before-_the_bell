@@ -7,6 +7,7 @@ public class MoveGoatToBarnSimple : MonoBehaviour
     public GameObject player;
     public Transform finalGoatPosition;
     public float moveSpeed = 5f;
+    public int coinReward = 10; // Coins awarded when goat reaches barn
 
     [Header("Optional")]
     public GameObject goat;
@@ -69,5 +70,11 @@ public class MoveGoatToBarnSimple : MonoBehaviour
         goatObj.transform.rotation = Quaternion.identity;
 
         Debug.Log("🐐 Goat delivered to barn!");
+
+        // ✅ Add coins to GameManager
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.AddCoins(coinReward);
+        }
     }
 }
