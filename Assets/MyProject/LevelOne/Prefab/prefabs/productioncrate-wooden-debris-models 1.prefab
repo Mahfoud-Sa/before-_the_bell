@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &8241761851901635609
+--- !u!1001 &6399991575641892492
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -50,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 84dcc2207f0fd384fbf9b2168de558fb, type: 3}
       propertyPath: m_Name
-      value: productioncrate-wooden-debris-models
+      value: productioncrate-wooden-debris-models 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -58,44 +58,53 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: -5939030162480419098, guid: 84dcc2207f0fd384fbf9b2168de558fb, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 391453937748175242}
+      addedObject: {fileID: 12464896168322882}
     - targetCorrespondingSourceObject: {fileID: -5939030162480419098, guid: 84dcc2207f0fd384fbf9b2168de558fb, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1137262033367787417}
+      addedObject: {fileID: 7140415408022870843}
     - targetCorrespondingSourceObject: {fileID: -5939030162480419098, guid: 84dcc2207f0fd384fbf9b2168de558fb, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5456319053710141825}
+      addedObject: {fileID: 388995426283874014}
+    - targetCorrespondingSourceObject: {fileID: -5939030162480419098, guid: 84dcc2207f0fd384fbf9b2168de558fb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2874194282080506812}
     - targetCorrespondingSourceObject: {fileID: -4321142746524673460, guid: 84dcc2207f0fd384fbf9b2168de558fb, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3622019292375843324}
+      addedObject: {fileID: 8383608789953842445}
     - targetCorrespondingSourceObject: {fileID: -4321142746524673460, guid: 84dcc2207f0fd384fbf9b2168de558fb, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3693697641659062056}
+      addedObject: {fileID: 9210711771775528096}
     - targetCorrespondingSourceObject: {fileID: -4321142746524673460, guid: 84dcc2207f0fd384fbf9b2168de558fb, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8349043198218280555}
+      addedObject: {fileID: 7288793970097091635}
+    - targetCorrespondingSourceObject: {fileID: -4321142746524673460, guid: 84dcc2207f0fd384fbf9b2168de558fb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7187162662298377191}
     - targetCorrespondingSourceObject: {fileID: 2007576046906392220, guid: 84dcc2207f0fd384fbf9b2168de558fb, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4727939598248475455}
+      addedObject: {fileID: 3117044715098119235}
     - targetCorrespondingSourceObject: {fileID: 2007576046906392220, guid: 84dcc2207f0fd384fbf9b2168de558fb, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6263754551417428400}
+      addedObject: {fileID: 6271187952019972706}
     - targetCorrespondingSourceObject: {fileID: 2007576046906392220, guid: 84dcc2207f0fd384fbf9b2168de558fb, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5542915196008086817}
+      addedObject: {fileID: 8287779937640521046}
+    - targetCorrespondingSourceObject: {fileID: 2007576046906392220, guid: 84dcc2207f0fd384fbf9b2168de558fb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4404790436730310500}
   m_SourcePrefab: {fileID: 100100000, guid: 84dcc2207f0fd384fbf9b2168de558fb, type: 3}
---- !u!1 &3920569489859704405 stripped
+--- !u!1 &2078800441961135296 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -4321142746524673460, guid: 84dcc2207f0fd384fbf9b2168de558fb, type: 3}
-  m_PrefabInstance: {fileID: 8241761851901635609}
+  m_PrefabInstance: {fileID: 6399991575641892492}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &3622019292375843324
+--- !u!64 &8383608789953842445
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3920569489859704405}
+  m_GameObject: {fileID: 2078800441961135296}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -111,13 +120,13 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 921660707263626327, guid: 84dcc2207f0fd384fbf9b2168de558fb, type: 3}
---- !u!65 &3693697641659062056
+--- !u!65 &9210711771775528096
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3920569489859704405}
+  m_GameObject: {fileID: 2078800441961135296}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -132,105 +141,71 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.001056251, y: 0.0011651134, z: 0.010631952}
   m_Center: {x: -0.00014772454, y: 0.000059907634, z: -0.0001940366}
---- !u!114 &8349043198218280555
+--- !u!114 &7288793970097091635
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3920569489859704405}
+  m_GameObject: {fileID: 2078800441961135296}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2132d4a0d6932e24ab057ddc66c745f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WoodItem
   value: 1
---- !u!1 &6914376952332698367 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -5939030162480419098, guid: 84dcc2207f0fd384fbf9b2168de558fb, type: 3}
-  m_PrefabInstance: {fileID: 8241761851901635609}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &391453937748175242
-BoxCollider:
+--- !u!54 &7187162662298377191
+Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6914376952332698367}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.00047284947, y: 0.0025300772, z: 0.0123124905}
-  m_Center: {x: 0.0000000033469405, y: -0.000000009895301, z: 0.00008229398}
---- !u!64 &1137262033367787417
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6914376952332698367}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_GameObject: {fileID: 2078800441961135296}
   serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 2021435753535935432, guid: 84dcc2207f0fd384fbf9b2168de558fb, type: 3}
---- !u!114 &5456319053710141825
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6914376952332698367}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2132d4a0d6932e24ab057ddc66c745f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WoodItem
-  value: 1
---- !u!1 &7619186203992412805 stripped
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!1 &4831519808129374224 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2007576046906392220, guid: 84dcc2207f0fd384fbf9b2168de558fb, type: 3}
-  m_PrefabInstance: {fileID: 8241761851901635609}
+  m_PrefabInstance: {fileID: 6399991575641892492}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4727939598248475455
+--- !u!114 &3117044715098119235
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7619186203992412805}
+  m_GameObject: {fileID: 4831519808129374224}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2132d4a0d6932e24ab057ddc66c745f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WoodItem
   value: 1
---- !u!65 &6263754551417428400
+--- !u!65 &6271187952019972706
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7619186203992412805}
+  m_GameObject: {fileID: 4831519808129374224}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -245,13 +220,13 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.00055900053, y: 0.0023733624, z: 0.019870488}
   m_Center: {x: 0, y: -5.820765e-11, z: 0.0005186604}
---- !u!64 &5542915196008086817
+--- !u!64 &8287779937640521046
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7619186203992412805}
+  m_GameObject: {fileID: 4831519808129374224}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -267,3 +242,118 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 7154524003723217212, guid: 84dcc2207f0fd384fbf9b2168de558fb, type: 3}
+--- !u!54 &4404790436730310500
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4831519808129374224}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!1 &8450166758960433258 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -5939030162480419098, guid: 84dcc2207f0fd384fbf9b2168de558fb, type: 3}
+  m_PrefabInstance: {fileID: 6399991575641892492}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &12464896168322882
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8450166758960433258}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.00047284947, y: 0.0025300772, z: 0.0123124905}
+  m_Center: {x: 0.0000000033469405, y: -0.000000009895301, z: 0.00008229398}
+--- !u!64 &7140415408022870843
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8450166758960433258}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 2021435753535935432, guid: 84dcc2207f0fd384fbf9b2168de558fb, type: 3}
+--- !u!114 &388995426283874014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8450166758960433258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2132d4a0d6932e24ab057ddc66c745f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WoodItem
+  value: 1
+--- !u!54 &2874194282080506812
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8450166758960433258}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
