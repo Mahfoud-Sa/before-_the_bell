@@ -1,123 +1,142 @@
 using SHG.AnimatorCoder;
-using System;
 using UnityEngine;
+
 public class PlayerMovement1 : AnimatorCoder
-
-
 {
+    public static PlayerMovement1 instance;
+
     [Header("Ground Check")]
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundDistance = 0.2f;
     [SerializeField] private LayerMask groundMask;
 
+    [Header("Movement")]
+    [SerializeField] private float movementSpeed = 5f;
 
-
-    [SerializeField] private CapsuleCollider PlayerCollider;
-    [SerializeField] private float movementSpeed;
-    public static PlayerMovement1 instance;
-    private float movement = 0;
+    private float movement = 0f;
     private Rigidbody rb;
+    private SpriteRenderer sprite;
 
     [Header("Jump System")]
-    [SerializeField] private float jumpHeight;
-    [SerializeField] private float fallMultiplier;
-    [SerializeField] private float jumpMultiplies;
-    [SerializeField] private float jumpTime;
+    [SerializeField] private float jumpHeight = 7f;
+    [SerializeField] private float fallMultiplier = 2.5f;
+    [SerializeField] private float jumpMultiplier = 2f;
+    [SerializeField] private float jumpTime = 0.3f;
 
-    bool isJumping;
-    float jumpCounter;
+    private bool isJumping;
+    private float jumpCounter;
+    private Vector3 vecGravity;
 
-    Vector3 vecGravity;
-
-
-    private SpriteRenderer sprite;
+    // Mobile input
     private bool _moveRightInput = false;
     private bool _moveLeftInput = false;
     private bool _jumpPressed = false;
+
     private void Awake()
     {
         instance = this;
     }
+
     void Start()
     {
         Initialize();
-        rb = gameObject.GetComponent<Rigidbody>();
-        sprite = rb.GetComponent<SpriteRenderer>();
 
-        vecGravity = new Vector3(0,-Physics.gravity.y, 0);
+        rb = GetComponent<Rigidbody>();
+        sprite = GetComponent<SpriteRenderer>();
+
+        // 🔥 Important fixes
+        rb.isKinematic = false;
+        rb.useGravity = true;
+        rb.WakeUp();
+
+        vecGravity = new Vector3(0, -Physics.gravity.y, 0);
     }
 
     void Update()
     {
+        // Keyboard (Editor)
         movement = Input.GetAxisRaw("Horizontal");
+
+        // Mobile override
         if (_moveRightInput) movement = 1f;
         else if (_moveLeftInput) movement = -1f;
-        DefaultAnimation(0);
-        CheckJump();
 
-        
+        DefaultAnimation(0);
+
+        CheckJump();
     }
 
     private void FixedUpdate()
     {
-        
-        rb.linearVelocity = new(movementSpeed * movement, rb.linearVelocity.y);
-        SetBool(Parameters.GROUNDED, Physics.CheckSphere(groundCheck.position, groundDistance, groundMask));
-        SetBool(Parameters.FALLING, !GetBool(Parameters.GROUNDED) && rb.linearVelocity.y < 0);
+        if (Time.timeScale == 0f) return;
+
+        // ✅ FIXED movement (velocity instead of linearVelocity)
+        rb.linearVelocity = new Vector3(movementSpeed * movement, rb.linearVelocity.y, 0);
+
+        bool isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+
+        SetBool(Parameters.GROUNDED, isGrounded);
+        SetBool(Parameters.FALLING, !isGrounded && rb.linearVelocity.y < 0);
     }
+
+    // ---------------- MOBILE INPUT ----------------
+
     public void PressRight(bool isPressed) => _moveRightInput = isPressed;
     public void PressLeft(bool isPressed) => _moveLeftInput = isPressed;
     public void PressJump(bool isPressed) => _jumpPressed = isPressed;
-    //public void PressJump() => _jumpPressed = true;
 
-    public void CheckJump()
+    // ---------------- JUMP SYSTEM ----------------
+
+    void CheckJump()
     {
-        if (GetBool(Parameters.GROUNDED) && (Input.GetKeyDown(KeyCode.Space) || _jumpPressed))
+        bool isGrounded = GetBool(Parameters.GROUNDED);
+
+        if (isGrounded && (Input.GetKeyDown(KeyCode.Space) || _jumpPressed))
         {
-            
-            rb.linearVelocity = new(rb.linearVelocity.x, jumpHeight);
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpHeight, 0);
+
             isJumping = true;
             jumpCounter = 0;
-           
-            //Play(new(Animations.OneFrameJump, true));
+
             Play(new(Animations.Run_Jump1, true));
-            SoundManager.Instance.PlayJump();
+            SoundManager.Instance?.PlayJump();
         }
 
         if (rb.linearVelocity.y > 0 && isJumping)
         {
             jumpCounter += Time.deltaTime;
-            if (jumpCounter > jumpTime) isJumping = false;
+
+            if (jumpCounter > jumpTime)
+                isJumping = false;
 
             float t = jumpCounter / jumpTime;
-            float currentJumpM = jumpMultiplies;
+            float currentJumpM = jumpMultiplier;
+
             if (t > 0.5f)
-            {
-                currentJumpM = jumpMultiplies * (1 - t);
-            }
+                currentJumpM *= (1 - t);
 
             rb.linearVelocity += vecGravity * currentJumpM * Time.deltaTime;
         }
 
-        if (Input.GetKeyUp(KeyCode.Space) && !_jumpPressed) 
+        if (Input.GetKeyUp(KeyCode.Space) && !_jumpPressed)
         {
             isJumping = false;
             jumpCounter = 0;
 
-            if (rb.linearVelocity.y > 0) 
+            if (rb.linearVelocity.y > 0)
             {
-                rb.linearVelocity = new Vector3(rb.linearVelocity.x,rb.linearVelocity.y * 0.2f, 0);
+                rb.linearVelocity = new Vector3(rb.linearVelocity.x, rb.linearVelocity.y * 0.2f, 0);
             }
         }
-       
 
         if (rb.linearVelocity.y < 0)
         {
             rb.linearVelocity -= vecGravity * fallMultiplier * Time.deltaTime;
         }
-
     }
-   
+
+    // ---------------- ANIMATION ----------------
+
     public override void DefaultAnimation(int layer)
     {
         if (movement == 0)
@@ -134,35 +153,6 @@ public class PlayerMovement1 : AnimatorCoder
         if (movement != 0)
         {
             sprite.flipX = movement > 0;
-          
         }
-        
-
-
-        //if (movement != 0) sprite.flipX = movement > 0;
-        //if (!GetBool(Parameters.GROUNDED))
-        //{
-        //    // AIR ANIMATIONS
-        //    if (movement == 0)
-        //    {
-        //        Play(new(Animations.Jump, true));
-        //    }
-        //    else
-        //    {
-        //        Play(new(Animations.Run_Jump, true)); 
-        //    }
-        //}
-        //else
-        //{
-        //    // GROUND ANIMATIONS
-        //    if (movement == 0)
-        //    {
-        //        Play(new(Animations.Idle));
-        //    }
-        //    else
-        //    {
-        //        Play(new(Animations.Running));
-        //    }
-        //}
     }
 }

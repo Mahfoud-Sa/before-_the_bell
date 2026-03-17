@@ -4,23 +4,22 @@ using UnityEngine.Rendering;
 public class SettingsButtonScript : MonoBehaviour
 {
     public GameObject settingsMenuPanel;
-    public Volume postProcessVolume; // Assign your Volume here in Inspector
+    public Volume postProcessVolume;
 
-    // Optional: for smooth fade
     public float fadeSpeed = 2f;
     private float targetWeight = 0f;
 
     void Update()
     {
-        // Smooth fade for Volume (optional)
-        if (postProcessVolume != null)
-        {
-            postProcessVolume.weight = Mathf.MoveTowards(
-                postProcessVolume.weight,
-                targetWeight,
-                fadeSpeed * Time.deltaTime
-            );
-        }
+        // if (postProcessVolume != null)
+        // {
+        //     // IMPORTANT: use unscaled time (works even when paused)
+        //     postProcessVolume.weight = Mathf.MoveTowards(
+        //         postProcessVolume.weight,
+        //         targetWeight,
+        //         fadeSpeed * Time.unscaledDeltaTime
+        //     );
+        // }
     }
 
     public void ToggleSettingsMenu()
@@ -30,19 +29,18 @@ public class SettingsButtonScript : MonoBehaviour
             bool isActive = !settingsMenuPanel.activeSelf;
             settingsMenuPanel.SetActive(isActive);
 
-            // Toggle Volume based on settings menu state
+            // Smooth fade
             if (postProcessVolume != null)
             {
-                // Instant toggle:
-                // postProcessVolume.enabled = isActive;
-
-                // Smooth fade toggle:
                 targetWeight = isActive ? 1f : 0f;
             }
+
+            // 🔥 IMPORTANT: control time here too (just in case)
+          //  Time.timeScale = isActive ? 0f : 1f;
         }
         else
         {
-            Debug.LogWarning("SettingsMenuPanel is not assigned in the Inspector!");
+            Debug.LogWarning("SettingsMenuPanel is not assigned!");
         }
     }
 }

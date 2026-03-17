@@ -3,7 +3,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
- public int coins = 0;
+
+    public int coins = 0;
 
     [Header("Settings")]
     public GameObject settingsPanel;
@@ -16,52 +17,39 @@ public class GameManager : MonoBehaviour
 
     [Header("Stars System")]
     public int maxStars = 3;
-    public int currentStars = 2; // Player starts with 2 stars
+    public int currentStars = 2;
 
-    // Optional flags for star logic
     public bool usedEffect = false;
     public bool boughtFromStore = false;
 
-    // ---------------- TREE SYSTEM ----------------
-
     [Header("Tree System")]
-    [Tooltip("Set how many trees must be chopped to open the wall")]
     public int remainingTrees = 3;
-
     public GameObject treeWall;
 
-    // ---------------- GOAT SYSTEM ----------------
-
     [Header("Goat System")]
-    [Tooltip("Current goats in the level")]
     public int currentGoats = 0;
-
-    [Tooltip("Maximum goats allowed")]
     public int maxGoats = 10;
 
     // ---------------- UNITY METHODS ----------------
-    public void AddCoins(int amount)
-    {
-        coins += amount;
-        Debug.Log($"💰 Coins: {coins}");
 
-        // Update UI
-        if (UIManager.Instance != null)
-            UIManager.Instance.UpdateCoinsText(coins);
-    }
     private void Awake()
     {
-        // Singleton pattern
-        if (Instance == null)
-            Instance = this;
-        else
+        // Safe Singleton
+        if (Instance != null && Instance != this)
+        {
             Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+
+        // VERY IMPORTANT: prevents Android freeze
+      //  Time.timeScale = 1f;
     }
 
     void Start()
     {
         currentTime = gameTime;
-        Time.timeScale = 1f;
     }
 
     void Update()
@@ -80,6 +68,18 @@ public class GameManager : MonoBehaviour
         {
             GameOver();
         }
+    }
+
+    // ---------------- COINS ----------------
+
+    public void AddCoins(int amount)
+    {
+        coins += amount;
+
+        Debug.Log("💰 Coins: " + coins);
+
+        if (UIManager.Instance != null)
+            UIManager.Instance.UpdateCoinsText(coins);
     }
 
     // ---------------- TREE LOGIC ----------------
@@ -101,9 +101,7 @@ public class GameManager : MonoBehaviour
     private void OpenWall()
     {
         if (treeWall != null)
-        {
             treeWall.SetActive(false);
-        }
 
         Debug.Log("Wall Opened!");
     }
@@ -164,7 +162,7 @@ public class GameManager : MonoBehaviour
         if (currentStars < maxStars)
         {
             currentStars++;
-            Debug.Log("Star Added. Current Stars: " + currentStars);
+            Debug.Log("Star Added: " + currentStars);
         }
     }
 
@@ -173,7 +171,7 @@ public class GameManager : MonoBehaviour
         if (currentStars > 0)
         {
             currentStars--;
-            Debug.Log("Star Lost. Current Stars: " + currentStars);
+            Debug.Log("Star Lost: " + currentStars);
         }
     }
 
@@ -184,6 +182,7 @@ public class GameManager : MonoBehaviour
         if (gameEnded) return;
 
         gameEnded = true;
+
         Time.timeScale = 0f;
 
         if (EndGameUI.Instance != null)
@@ -192,8 +191,6 @@ public class GameManager : MonoBehaviour
 
     public void WinGame()
     {
-        Debug.Log("WinGame called in GameManager");
-
         if (gameEnded) return;
 
         gameEnded = true;
@@ -205,6 +202,8 @@ public class GameManager : MonoBehaviour
             AddStar();
 
         Time.timeScale = 0f;
+
+        Debug.Log("Player Won!");
     }
 
     // ---------------- NAVIGATION ----------------
@@ -213,5 +212,12 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         UnityEngine.SceneManagement.SceneManager.LoadScene(2);
+    }
+
+    // ---------------- TIMER ACCESS ----------------
+
+    public float GetCurrentTime()
+    {
+        return currentTime;
     }
 }

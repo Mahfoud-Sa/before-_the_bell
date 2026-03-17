@@ -12,15 +12,20 @@ public class ExitInfoPanelButton : MonoBehaviour
         {
             // Switch between active and inactive
             InfoMenuPanel.SetActive(!InfoMenuPanel.activeSelf);
+            Time.timeScale = 1f;
         }
         else
         {
             Debug.LogWarning("InfoMenuPanel  is not assigned in the Inspector!");
         }
     }
+    void Awake()
+    {
+        Time.timeScale = 0f;
+    }
     void Start()
     {
-        
+        Time.timeScale = 0f;
     }
 
     // Update is called once per frame
