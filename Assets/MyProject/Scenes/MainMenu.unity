@@ -5106,14 +5106,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2056098975}
     m_Modifications:
+    - target: {fileID: 1715006915713060361, guid: 39f67f60278b3d944bbb3d37318b13f7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2933039629056133833, guid: 39f67f60278b3d944bbb3d37318b13f7, type: 3}
       propertyPath: m_Name
       value: SettingMenuPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 2933039629056133833, guid: 39f67f60278b3d944bbb3d37318b13f7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4725356877513154571, guid: 39f67f60278b3d944bbb3d37318b13f7, type: 3}
       propertyPath: postProcessVolume
       value: 
       objectReference: {fileID: 757882539}
+    - target: {fileID: 5350509205015506954, guid: 39f67f60278b3d944bbb3d37318b13f7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5351472669457001246, guid: 39f67f60278b3d944bbb3d37318b13f7, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -5194,11 +5206,75 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6275450337350596065, guid: 39f67f60278b3d944bbb3d37318b13f7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6592904983878972041, guid: 39f67f60278b3d944bbb3d37318b13f7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8936110502473259378, guid: 39f67f60278b3d944bbb3d37318b13f7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 8318562658293739046}
+    - target: {fileID: 8936110502473259378, guid: 39f67f60278b3d944bbb3d37318b13f7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Toggle
+      objectReference: {fileID: 0}
+    - target: {fileID: 8936110502473259378, guid: 39f67f60278b3d944bbb3d37318b13f7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ToggleMusicButton, Assembly-CSharp
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 983761528523436840, guid: 39f67f60278b3d944bbb3d37318b13f7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8318562658293739046}
+    - targetCorrespondingSourceObject: {fileID: 720371339223659681, guid: 39f67f60278b3d944bbb3d37318b13f7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8318562658293739045}
   m_SourcePrefab: {fileID: 100100000, guid: 39f67f60278b3d944bbb3d37318b13f7, type: 3}
+--- !u!1 &8318562658293739043 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 720371339223659681, guid: 39f67f60278b3d944bbb3d37318b13f7, type: 3}
+  m_PrefabInstance: {fileID: 8318562658293739042}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8318562658293739044 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 983761528523436840, guid: 39f67f60278b3d944bbb3d37318b13f7, type: 3}
+  m_PrefabInstance: {fileID: 8318562658293739042}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8318562658293739045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8318562658293739043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d6b1b45962824849971f010fd63416f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ToggleSoundButton
+  activeSprite: {fileID: 21300000, guid: 1120a21ff8aa85b478eb647304224fd2, type: 3}
+  inactiveSprite: {fileID: 21300000, guid: 9cdca38dc0dddbc4285b86b9869c991e, type: 3}
+--- !u!114 &8318562658293739046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8318562658293739044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b49986b7e4cc94f4f8e08323f5491296, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ToggleMusicButton
+  activeSprite: {fileID: 21300000, guid: 1120a21ff8aa85b478eb647304224fd2, type: 3}
+  inactiveSprite: {fileID: 21300000, guid: 9cdca38dc0dddbc4285b86b9869c991e, type: 3}
 --- !u!114 &8360486208208345863
 MonoBehaviour:
   m_ObjectHideFlags: 0
