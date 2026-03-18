@@ -5,25 +5,31 @@ public class SoundManager : MonoBehaviour
     public static SoundManager Instance;
 
     [Header("Audio Sources")]
-    public AudioSource musicSource;      // صوت الخلفية
-    public AudioSource sfxSource;        // مؤثرات عامة
-    public AudioSource loopSource;       // للأصوات المتكررة مثل الجري
-    public AudioSource playerSource;      
+    public AudioSource musicSource;
+    public AudioSource sfxSource;
+    public AudioSource loopSource;
+    public AudioSource playerSource;
     public AudioSource rockSource;
     public AudioSource riverSource;
 
     [Header("Music")]
     public AudioClip backgroundMusic;
+
     [Header("River")]
     public AudioClip riverSound;
+
     [Header("Gots")]
     public AudioClip gotsSound;
+
     [Header("Win")]
     public AudioClip winSound;
+
     [Header("Lose")]
     public AudioClip loseSound;
+
     [Header("Bell Sound")]
     public AudioClip bellSound;
+
     [Header("Player Sounds")]
     public AudioClip jumpSound;
     public AudioClip runLoopSound;
@@ -37,6 +43,10 @@ public class SoundManager : MonoBehaviour
 
     [Header("Coin")]
     public AudioClip coinPickupSound;
+
+    [Header("Mute Settings")]
+    private bool isMusicMuted = false;
+    private bool isSFXMuted = false;
 
     private void Awake()
     {
@@ -53,7 +63,53 @@ public class SoundManager : MonoBehaviour
 
     private void Start()
     {
+        LoadSettings();
+        ApplyMuteSettings();
         PlayMusic();
+    }
+
+    // ---------- LOAD ----------
+    void LoadSettings()
+    {
+        isMusicMuted = PlayerPrefs.GetInt("MusicMuted", 0) == 1;
+        isSFXMuted = PlayerPrefs.GetInt("SFXMuted", 0) == 1;
+    }
+
+    void ApplyMuteSettings()
+    {
+        musicSource.mute = isMusicMuted;
+
+        sfxSource.mute = isSFXMuted;
+        loopSource.mute = isSFXMuted;
+        playerSource.mute = isSFXMuted;
+        rockSource.mute = isSFXMuted;
+        riverSource.mute = isSFXMuted;
+    }
+
+    // ---------- GETTERS ----------
+    public bool IsMusicMuted() => isMusicMuted;
+    public bool IsSFXMuted() => isSFXMuted;
+
+    // ---------- TOGGLES ----------
+    public void ToggleMusic()
+    {
+        isMusicMuted = !isMusicMuted;
+        musicSource.mute = isMusicMuted;
+
+        PlayerPrefs.SetInt("MusicMuted", isMusicMuted ? 1 : 0);
+    }
+
+    public void ToggleSFX()
+    {
+        isSFXMuted = !isSFXMuted;
+
+        sfxSource.mute = isSFXMuted;
+        loopSource.mute = isSFXMuted;
+        playerSource.mute = isSFXMuted;
+        rockSource.mute = isSFXMuted;
+        riverSource.mute = isSFXMuted;
+
+        PlayerPrefs.SetInt("SFXMuted", isSFXMuted ? 1 : 0);
     }
 
     // ---------- MUSIC ----------
@@ -66,32 +122,35 @@ public class SoundManager : MonoBehaviour
         musicSource.Play();
     }
 
-    // ---------- ONE SHOT SFX ----------
+    // ---------- SFX ----------
     public void PlaySFX(AudioClip clip)
     {
-        if (clip == null) return;
+        if (clip == null || isSFXMuted) return;
         sfxSource.PlayOneShot(clip);
     }
 
     public void PlayPlayerSounds(AudioClip clip)
     {
-        if (clip == null) return;
+        if (clip == null || isSFXMuted) return;
         playerSource.PlayOneShot(clip);
     }
+
     public void PlayRiverSounds(AudioClip clip)
     {
-        if (clip == null) return;
+        if (clip == null || isSFXMuted) return;
         riverSource.PlayOneShot(clip);
     }
+
     public void PlayRockSounds(AudioClip clip)
     {
-        if (clip == null) return;
+        if (clip == null || isSFXMuted) return;
         rockSource.PlayOneShot(clip);
     }
-    // ---------- RUN LOOP ----------
+
+    // ---------- LOOP ----------
     public void StartRunSound()
     {
-        if (runLoopSound == null) return;
+        if (runLoopSound == null || isSFXMuted) return;
 
         if (!loopSource.isPlaying)
         {
@@ -106,35 +165,29 @@ public class SoundManager : MonoBehaviour
         if (loopSource.isPlaying)
             loopSource.Stop();
     }
+
     public void StopRiverSource()
     {
         if (riverSource.isPlaying)
             riverSource.Stop();
     }
 
-    // ---------- Public API ----------
-    // ---------- Player ----------
+    // ---------- PUBLIC API ----------
     public void PlayJump() => PlayPlayerSounds(jumpSound);
     public void PlayPlayerHit() => PlayPlayerSounds(playerHitSound);
-    // ---------- Rocks ----------
+
     public void PlayComingRockSound() => PlayRockSounds(comingStone);
     public void PlaySmallRock() => PlayRockSounds(smallRockImpact);
     public void PlayBigRock() => PlaySFX(bigRockImpact);
     public void PlayAfterFallingStones() => PlayRiverSounds(afterFallingStone);
-    // ---------- Coin----------
+
     public void PlayCoin() => PlaySFX(coinPickupSound);
-    // ---------- Gots----------
     public void PlayGotsSound() => PlaySFX(gotsSound);
-    // ---------- RiverSound----------
+
     public void PlayRiverSound() => PlayRiverSounds(riverSound);
     public void StopRiverSound() => StopRiverSource();
 
-
-    // ---------- WinSound----------
     public void PlayWinSound() => PlaySFX(winSound);
-    // ---------- LoseSound----------
     public void PlayLoseSound() => PlaySFX(loseSound);
-    // ---------- BellSound----------
     public void PlayBellSound() => PlaySFX(bellSound);
-
 }

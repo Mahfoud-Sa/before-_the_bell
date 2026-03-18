@@ -1,17 +1,14 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-
-public class SliderToggleButton : MonoBehaviour
+public class ToggleSoundButton : MonoBehaviour
 {
-    [Header("Sprites")]
     public Sprite activeSprite;
     public Sprite inactiveSprite;
 
     private Image buttonImage;
-    private bool isOn = true;
 
-    void Awake()
+    void Start()
     {
         buttonImage = GetComponent<Image>();
         UpdateVisual();
@@ -19,13 +16,13 @@ public class SliderToggleButton : MonoBehaviour
 
     public void Toggle()
     {
-        isOn = !isOn;
+        SoundManager.Instance.ToggleSFX();
         UpdateVisual();
     }
 
     void UpdateVisual()
     {
-        buttonImage.sprite = isOn ? activeSprite : inactiveSprite;
+        bool isMuted = SoundManager.Instance.IsSFXMuted();
+        buttonImage.sprite = isMuted ? inactiveSprite : activeSprite;
     }
 }
-

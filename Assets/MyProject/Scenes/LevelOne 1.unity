@@ -20509,6 +20509,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SliderToggleButton
   activeSprite: {fileID: 21300000, guid: 1120a21ff8aa85b478eb647304224fd2, type: 3}
   inactiveSprite: {fileID: 21300000, guid: 9cdca38dc0dddbc4285b86b9869c991e, type: 3}
+  controlMusic: 1
+  buttonImage: {fileID: 0}
+  isOn: 1
 --- !u!1 &1131190176944595527
 GameObject:
   m_ObjectHideFlags: 0
@@ -20760,6 +20763,7 @@ GameObject:
   - component: {fileID: 5827135317618103902}
   - component: {fileID: 4453359971932052922}
   - component: {fileID: 1128887563207440083}
+  - component: {fileID: 5827135317618103903}
   m_Layer: 5
   m_Name: SoundStateSlider
   m_TagString: Untagged
@@ -20831,20 +20835,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7969375938971103952}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1320533421689928355
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1574328204063039334}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4b3a229a66fb2b48ada977178ba234c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SliderToggleButton
-  activeSprite: {fileID: 21300000, guid: 1120a21ff8aa85b478eb647304224fd2, type: 3}
-  inactiveSprite: {fileID: 21300000, guid: 9cdca38dc0dddbc4285b86b9869c991e, type: 3}
 --- !u!4 &1342263505260768361
 Transform:
   m_ObjectHideFlags: 0
@@ -21107,7 +21097,7 @@ GameObject:
   - component: {fileID: 115062975529697103}
   - component: {fileID: 4330860602419302665}
   - component: {fileID: 7241040416904426812}
-  - component: {fileID: 1320533421689928355}
+  - component: {fileID: 7241040416904426813}
   m_Layer: 5
   m_Name: MusicStateSlider
   m_TagString: Untagged
@@ -25688,6 +25678,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SliderToggleButton
   activeSprite: {fileID: 21300000, guid: 1120a21ff8aa85b478eb647304224fd2, type: 3}
   inactiveSprite: {fileID: 21300000, guid: 9cdca38dc0dddbc4285b86b9869c991e, type: 3}
+  controlMusic: 1
+  buttonImage: {fileID: 0}
+  isOn: 1
 --- !u!1 &4116928473933051855
 GameObject:
   m_ObjectHideFlags: 0
@@ -26986,8 +26979,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1128887563207440083}
-        m_TargetAssemblyTypeName: SliderToggleButton, Assembly-CSharp
+      - m_Target: {fileID: 5827135317618103903}
+        m_TargetAssemblyTypeName: ToggleSoundButton, Assembly-CSharp
         m_MethodName: Toggle
         m_Mode: 1
         m_Arguments:
@@ -29481,6 +29474,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5827135317618103903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1261398387188013295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d6b1b45962824849971f010fd63416f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ToggleSoundButton
+  activeSprite: {fileID: 21300000, guid: 1120a21ff8aa85b478eb647304224fd2, type: 3}
+  inactiveSprite: {fileID: 21300000, guid: 9cdca38dc0dddbc4285b86b9869c991e, type: 3}
 --- !u!114 &5834248493725028973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32325,8 +32332,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1320533421689928355}
-        m_TargetAssemblyTypeName: SliderToggleButton, Assembly-CSharp
+      - m_Target: {fileID: 7241040416904426813}
+        m_TargetAssemblyTypeName: ToggleMusicButton, Assembly-CSharp
         m_MethodName: Toggle
         m_Mode: 1
         m_Arguments:
@@ -32337,6 +32344,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &7241040416904426813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1574328204063039334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b49986b7e4cc94f4f8e08323f5491296, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ToggleMusicButton
+  activeSprite: {fileID: 21300000, guid: 1120a21ff8aa85b478eb647304224fd2, type: 3}
+  inactiveSprite: {fileID: 21300000, guid: 9cdca38dc0dddbc4285b86b9869c991e, type: 3}
 --- !u!224 &7249992500099854502
 RectTransform:
   m_ObjectHideFlags: 0
