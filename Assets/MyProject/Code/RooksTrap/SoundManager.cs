@@ -181,7 +181,16 @@ public class SoundManager : MonoBehaviour
     public void PlayBigRock() => PlaySFX(bigRockImpact);
     public void PlayAfterFallingStones() => PlayRiverSounds(afterFallingStone);
 
-    public void PlayCoin() => PlaySFX(coinPickupSound);
+    // 🎯 UPDATED COIN SOUND (WITH PITCH VARIATION)
+    public void PlayCoin()
+    {
+        if (coinPickupSound == null || isSFXMuted) return;
+
+        sfxSource.pitch = Random.Range(0.9f, 1.1f); // variation
+        sfxSource.PlayOneShot(coinPickupSound);
+        sfxSource.pitch = 1f; // reset
+    }
+
     public void PlayGotsSound() => PlaySFX(gotsSound);
 
     public void PlayRiverSound() => PlayRiverSounds(riverSound);
