@@ -6,8 +6,15 @@ public class CameraController : MonoBehaviour
 {
     [SerializeField] private Transform player;
 
-    private void Update()
+    private void Start()
     {
-        transform.position = new Vector3(player.position.x, player.position.y, -12);
+        if (player != null)
+            transform.position = new Vector3(player.position.x, player.position.y, -12);
+    }
+
+    private void LateUpdate()
+    {
+        if (player != null)
+            transform.position = new Vector3(player.position.x, player.position.y, -12);
     }
 }
