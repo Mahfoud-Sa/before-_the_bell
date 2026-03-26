@@ -1,0 +1,8 @@
+Model Information:
+* title:	stylized desert house
+* source:	https://sketchfab.com/3d-models/stylized-desert-house-411c3a0fd7c74d7482665d4209a0014b
+* author:	mehmetalikeve (https://sketchfab.com/mehmetalikeve)
+
+Model License:
+* license type:	SKETCHFAB Standard (https://sketchfab.com/licenses)
+* requirements:	Under basic restrictions, use worldwide, on all types of media, commercially or not, and in all types of derivative works

@@ -1,0 +1,8 @@
+Model Information:
+* title:	Handpainted Stylized Grass and Rocks
+* source:	https://sketchfab.com/3d-models/handpainted-stylized-grass-and-rocks-67219bf9d4c341f3b1a54600a15c9485
+* author:	a-python-script (https://sketchfab.com/a-python-script)
+
+Model License:
+* license type:	SKETCHFAB Standard (https://sketchfab.com/licenses)
+* requirements:	Under basic restrictions, use worldwide, on all types of media, commercially or not, and in all types of derivative works
