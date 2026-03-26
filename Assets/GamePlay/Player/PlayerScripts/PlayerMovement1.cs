@@ -10,15 +10,25 @@ public class PlayerMovement1 : AnimatorCoder
     [SerializeField] private float groundDistance = 0.2f;
     [SerializeField] private LayerMask groundMask;
 
-    [Header("Movement")]
-    [SerializeField] private float movementSpeed = 5f;
+    [Header("Base Movement")]
+    [SerializeField] private float baseMovementSpeed = 50f;
+    [SerializeField] private float baseJumpHeight = 7f;
+
+    private float currentSpeed;
+    private float currentJump;
 
     private float movement = 0f;
     private Rigidbody rb;
     private SpriteRenderer sprite;
 
-    [Header("Jump System")]
-    [SerializeField] private float jumpHeight = 7f;
+    [Header("Mud System (Hit-based)")]
+    [SerializeField] private float minSpeed = 0f;
+
+    [Header("Mud Area (Zone-based)")]
+    private bool isInMudArea = false;
+    private float areaSpeed = -1f;
+
+    [Header("Jump Physics")]
     [SerializeField] private float fallMultiplier = 2.5f;
     [SerializeField] private float jumpMultiplier = 2f;
     [SerializeField] private float jumpTime = 0.3f;
@@ -32,9 +42,14 @@ public class PlayerMovement1 : AnimatorCoder
     private bool _moveLeftInput = false;
     private bool _jumpPressed = false;
 
+    // ---------------- INIT ----------------
+
     private void Awake()
     {
-        instance = this;
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(gameObject);
     }
 
     void Start()
@@ -44,25 +59,25 @@ public class PlayerMovement1 : AnimatorCoder
         rb = GetComponent<Rigidbody>();
         sprite = GetComponent<SpriteRenderer>();
 
-        // 🔥 Important fixes
-        rb.isKinematic = false;
         rb.useGravity = true;
         rb.WakeUp();
 
         vecGravity = new Vector3(0, -Physics.gravity.y, 0);
+
+        currentSpeed = baseMovementSpeed;
+        currentJump = baseJumpHeight;
     }
+
+    // ---------------- UPDATE ----------------
 
     void Update()
     {
-        // Keyboard (Editor)
         movement = Input.GetAxisRaw("Horizontal");
 
-        // Mobile override
         if (_moveRightInput) movement = 1f;
         else if (_moveLeftInput) movement = -1f;
 
         DefaultAnimation(0);
-
         CheckJump();
     }
 
@@ -70,13 +85,56 @@ public class PlayerMovement1 : AnimatorCoder
     {
         if (Time.timeScale == 0f) return;
 
-        // ✅ FIXED movement (velocity instead of linearVelocity)
-        rb.linearVelocity = new Vector3(movementSpeed * movement, rb.linearVelocity.y, 0);
+        float finalSpeed = isInMudArea ? areaSpeed : currentSpeed;
+
+        rb.linearVelocity = new Vector3(finalSpeed * movement, rb.linearVelocity.y, 0);
 
         bool isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         SetBool(Parameters.GROUNDED, isGrounded);
         SetBool(Parameters.FALLING, !isGrounded && rb.linearVelocity.y < 0);
+    }
+
+    // ---------------- STATIC MUD SYSTEM ----------------
+
+    public static void HitMud(float amount,float minSpeed)
+    {
+        if (instance == null) return;
+
+        instance.currentSpeed -= amount;
+        instance.currentJump -= amount * 0.1f;
+
+        instance.currentSpeed = Mathf.Max(instance.currentSpeed, minSpeed);
+
+        if (instance.currentSpeed <= 0f)
+        {
+            GameManager.Instance.GameOver();
+        }
+    }
+
+    public static void CleanMud(float amount)
+    {
+        if (instance == null) return;
+
+        instance.currentSpeed += amount;
+        instance.currentJump += amount * 0.1f;
+
+        instance.currentSpeed = Mathf.Min(instance.currentSpeed, instance.baseMovementSpeed);
+        instance.currentJump = Mathf.Min(instance.currentJump, instance.baseJumpHeight);
+    }
+
+    // ---------------- MUD AREA SYSTEM ----------------
+
+    public void EnterMudArea(float speedValue)
+    {
+        isInMudArea = true;
+        areaSpeed = speedValue;
+    }
+
+    public void ExitMudArea()
+    {
+        isInMudArea = false;
+        areaSpeed = -1f;
     }
 
     // ---------------- MOBILE INPUT ----------------
@@ -93,7 +151,7 @@ public class PlayerMovement1 : AnimatorCoder
 
         if (isGrounded && (Input.GetKeyDown(KeyCode.Space) || _jumpPressed))
         {
-            rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpHeight, 0);
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x, currentJump, 0);
 
             isJumping = true;
             jumpCounter = 0;
