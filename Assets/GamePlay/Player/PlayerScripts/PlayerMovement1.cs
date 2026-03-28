@@ -1,5 +1,6 @@
 using SHG.AnimatorCoder;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class PlayerMovement1 : AnimatorCoder
 {
@@ -9,6 +10,15 @@ public class PlayerMovement1 : AnimatorCoder
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundDistance = 0.2f;
     [SerializeField] private LayerMask groundMask;
+
+    [Header("Spot images")]
+    [SerializeField] private GameObject hotspot01;
+    [SerializeField] private GameObject hotspot02;
+    [SerializeField] private GameObject hotspot03;
+    [SerializeField] private GameObject hotspot04;
+    [SerializeField] private GameObject hotspot05;
+
+    private GameObject[] hotspots;
 
     [Header("Base Movement")]
     [SerializeField] private float baseMovementSpeed = 50f;
@@ -50,6 +60,8 @@ public class PlayerMovement1 : AnimatorCoder
             instance = this;
         else
             Destroy(gameObject);
+
+        hotspots = new GameObject[] { hotspot01, hotspot02, hotspot03, hotspot04, hotspot05 };
     }
 
     void Start()
@@ -95,19 +107,61 @@ public class PlayerMovement1 : AnimatorCoder
         SetBool(Parameters.FALLING, !isGrounded && rb.linearVelocity.y < 0);
     }
 
-    // ---------------- STATIC MUD SYSTEM ----------------
+    // ---------------- HOTSPOT SYSTEM ----------------
 
-    public static void HitMud(float amount,float minSpeed)
+    private void ActivateRandomHotspot()
+    {
+        List<GameObject> inactiveHotspots = new List<GameObject>();
+
+        foreach (var spot in hotspots)
+        {
+            if (spot != null && !spot.activeSelf)
+                inactiveHotspots.Add(spot);
+        }
+
+        if (inactiveHotspots.Count == 0) return;
+
+        int randomIndex = Random.Range(0, inactiveHotspots.Count);
+        inactiveHotspots[randomIndex].SetActive(true);
+    }
+
+    private void DeactivateRandomHotspot()
+    {
+        List<GameObject> activeHotspots = new List<GameObject>();
+
+        foreach (var spot in hotspots)
+        {
+            if (spot != null && spot.activeSelf)
+                activeHotspots.Add(spot);
+        }
+
+        if (activeHotspots.Count == 0) return;
+
+        int randomIndex = Random.Range(0, activeHotspots.Count);
+        activeHotspots[randomIndex].SetActive(false);
+    }
+
+    // ---------------- MUD SYSTEM ----------------
+
+    public static void HitMud(float amount, float minSpeed)
     {
         if (instance == null) return;
 
+        // Decrease speed & jump (balanced)
         instance.currentSpeed -= amount;
         instance.currentJump -= amount * 0.1f;
 
+        // Clamp minimum speed
         instance.currentSpeed = Mathf.Max(instance.currentSpeed, minSpeed);
+
+        // Activate visual effect
+        instance.ActivateRandomHotspot();
+
+        Debug.Log("HitMud -> Speed: " + instance.currentSpeed);
 
         if (instance.currentSpeed <= 0f)
         {
+            Debug.Log("Game Over: Player is stuck in the mud!");
             GameManager.Instance.GameOver();
         }
     }
@@ -116,11 +170,18 @@ public class PlayerMovement1 : AnimatorCoder
     {
         if (instance == null) return;
 
+        // Restore speed & jump
         instance.currentSpeed += amount;
         instance.currentJump += amount * 0.1f;
 
+        // Clamp to base values
         instance.currentSpeed = Mathf.Min(instance.currentSpeed, instance.baseMovementSpeed);
         instance.currentJump = Mathf.Min(instance.currentJump, instance.baseJumpHeight);
+
+        // Reverse visual effect
+        instance.DeactivateRandomHotspot();
+
+        Debug.Log("CleanMud -> Speed: " + instance.currentSpeed);
     }
 
     // ---------------- MUD AREA SYSTEM ----------------

@@ -1,26 +1,27 @@
 using System.Collections;
 using UnityEngine;
 
-public class MudAreaScript : MonoBehaviour
+public class clearSpotScript : MonoBehaviour
 {
-    [Header("Mud Strength")]
-    [SerializeField] private float valueToDecrease = 1f;
+    [Header("Clean Strength")]
+    [SerializeField] private float valueToIncrease = 1f;
 
     [Header("Behavior")]
-    [SerializeField] private bool destroyAfterHit = false;
-        [SerializeField] private float hitCooldown = 1f;
+    [SerializeField] private bool destroyAfterUse = false;
+    [SerializeField] private float hitCooldown = 1f;
 
     private bool canHit = true;
 
     private void OnTriggerEnter(Collider other)
     {
-       // if (!canHit) return;
+        if (!canHit) return;
 
         if (other.CompareTag("Player"))
         {
-            PlayerMovement1.HitMud(valueToDecrease,0.4f);
-           
-            if (destroyAfterHit)
+            // Reverse mud effect (restore player stats)
+            PlayerMovement1.CleanMud(valueToIncrease);
+
+            if (destroyAfterUse)
             {
                 Destroy(gameObject);
             }
@@ -33,8 +34,8 @@ public class MudAreaScript : MonoBehaviour
 
     private IEnumerator HitDelay()
     {
-       canHit = false;
+        canHit = false;
         yield return new WaitForSeconds(hitCooldown);
-      canHit = true;
+        canHit = true;
     }
 }
