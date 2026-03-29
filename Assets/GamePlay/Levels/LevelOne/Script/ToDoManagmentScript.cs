@@ -1,81 +1,118 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
-public class ToDoManagmentScript : MonoBehaviour
+public class ToDoManagementScript : MonoBehaviour
 {
-    public static ToDoManagmentScript Instance;
+    public static ToDoManagementScript Instance;
 
-    [Header("Items To Pick Up")]
-    public GameObject penToPickUp;
-    public GameObject rulerToPickUp;
-    public GameObject eraserToPickUp;
+    [System.Serializable]
+    public class QuestItem
+    {
+        public string itemName;
+        public GameObject worldObject; 
+        public Image uiCheckMark;      
+        [HideInInspector] public bool isCollected = false;
+    }
 
-    [Header("UI Panel")]
+    [Header("Quest List")]
+    public List<QuestItem> questItems = new List<QuestItem>();
+
+    [Header("UI Panel Settings")]
     public GameObject todoPanel;
-
-    [Header("Task UI (Images or Text)")]
-    public Image penCheck;
-    public Image rulerCheck;
-    public Image eraserCheck;
-
-    private bool penDone = false;
-    private bool rulerDone = false;
-    private bool eraserDone = false;
+    public Button toggleButton; // Optional: Assign your "Show Items" button here
 
     private void Awake()
     {
-        // ✅ Singleton like your CheckpointManager
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
     }
 
     void Start()
     {
-        // Optional: hide checks at start
-        if (penCheck != null) penCheck.enabled = false;
-        if (rulerCheck != null) rulerCheck.enabled = false;
-        if (eraserCheck != null) eraserCheck.enabled = false;
+        // Setup initial UI state
+        foreach (var item in questItems)
+        {
+            if (item.uiCheckMark != null) 
+                item.uiCheckMark.enabled = item.isCollected;
+        }
 
+        // Start with the panel hidden
         if (todoPanel != null)
-            todoPanel.SetActive(true);
+            todoPanel.SetActive(false);
+
+        // If you assigned the button in Inspector, we hook it up automatically
+        if (toggleButton != null)
+            toggleButton.onClick.AddListener(ToggleToDoMenu);
     }
 
-    void Update()
+    // --- NEW TOGGLE METHOD ---
+    public void ToggleToDoMenu()
     {
-        CheckAllTasks();
+        if (todoPanel != null)
+        {
+            bool isActive = !todoPanel.activeSelf;
+            todoPanel.SetActive(isActive);
+
+            // Optional: Pause game time or play a sound when opening
+            if (isActive) 
+            {
+                Debug.Log("Opening To-Do List...");
+                RefreshUI(); // Ensure checkmarks match current progress
+            }
+        }
+        else
+        {
+            Debug.LogWarning("todoPanel is not assigned in the Inspector!");
+        }
     }
 
-    // ✅ This is what CollectItem will call
-    public void CollectItem(GameObject item)
+  public void CollectItem(GameObject collectedObject)
+{
+    foreach (var item in questItems)
     {
-        if (item == penToPickUp && !penDone)
+        if (item.worldObject == null) continue;
+
+        // Compare by instance OR name (safer)
+        if ((item.worldObject == collectedObject || 
+             item.worldObject.name == collectedObject.name) 
+             && !item.isCollected)
         {
-            penDone = true;
-            if (penCheck != null) penCheck.enabled = true;
-        }
-        else if (item == rulerToPickUp && !rulerDone)
-        {
-            rulerDone = true;
-            if (rulerCheck != null) rulerCheck.enabled = true;
-        }
-        else if (item == eraserToPickUp && !eraserDone)
-        {
-            eraserDone = true;
-            if (eraserCheck != null) eraserCheck.enabled = true;
+            item.isCollected = true;
+
+            // Activate checkmark properly
+            if (item.uiCheckMark != null)
+                item.uiCheckMark.gameObject.SetActive(true);
+                item.uiCheckMark.color = Color.red;
+                item.uiCheckMark.rectTransform.sizeDelta = new Vector2(100, 100);
+                item.uiCheckMark.transform.SetAsLastSibling();
+                item.uiCheckMark.enabled = true;
+            Debug.Log($"{item.itemName} collected and UI updated!");
+
+           // CheckAllTasks();
+            return;
         }
     }
 
-    void CheckAllTasks()
+    Debug.LogWarning("Collected object not found in quest list!");
+}
+
+    // Updates all checkmarks based on the isCollected bool
+    void RefreshUI()
     {
-        if (penDone && rulerDone && eraserDone)
+        foreach (var item in questItems)
         {
-            Debug.Log("All Tasks Completed!");
-
-            // ✅ Example: hide panel
-            if (todoPanel != null)
-                todoPanel.SetActive(false);
-
-            // 👉 You can trigger win / open door here
+            if (item.uiCheckMark != null)
+                item.uiCheckMark.enabled = item.isCollected;
         }
     }
+
+    // void CheckAllTasks()
+    // {
+    //     if (questItems.TrueForAll(x => x.isCollected))
+    //     {
+    //         Debug.Log("All Tasks Completed!");
+    //         // You might want to keep the panel open for a moment to show the final check
+    //     }
+    // }
 }

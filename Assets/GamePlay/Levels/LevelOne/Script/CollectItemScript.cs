@@ -1,39 +1,54 @@
 using UnityEngine;
 
+public interface ICollectible
+{
+    void OnCollected();
+}
+
 public class CollectItemScript : MonoBehaviour
 {
-   [Header("Rotation Settings")]
+    [Header("Rotation Settings")]
     public float rotationSpeed = 200f;
-    public bool use2D = false; // 👈 if you're using sprites
+    public bool use2D = false; 
 
     private void Update()
     {
+        float step = rotationSpeed * Time.deltaTime;
         if (use2D)
-        {
-            // Rotate for 2D (Z axis)
-            transform.Rotate(0f, 0f, rotationSpeed * Time.deltaTime);
-        }
+            transform.Rotate(0f, 0f, step);
         else
-        {
-            // Rotate for 3D (Y axis)
-            transform.Rotate(0f, rotationSpeed * Time.deltaTime, 0f);
-        }
+            transform.Rotate(0f, step, 0f);
     }
 
+    // --- 3D Collision ---
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            // 🎵 Optional sound
-           // if (SoundManager.Instance != null)
-              //  SoundManager.Instance.PlayCoin();
-
-            // ✅ Notify ToDoManager
-            if (ToDoManagmentScript.Instance != null)
-                ToDoManagmentScript.Instance.CollectItem(gameObject);
-
-            // ❌ Remove item
-            Destroy(gameObject, 0.05f);
+            HandleCollection();
         }
+    }
+
+    // --- 2D Collision (For Sprites) ---
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            HandleCollection();
+        }
+    }
+
+    private void HandleCollection()
+    {
+        // ✅ Notify ToDoManager
+        if (ToDoManagementScript.Instance != null)
+        {
+            // We pass this specific GameObject so the Manager knows which checkmark to enable
+            ToDoManagementScript.Instance.CollectItem(gameObject);
+        }
+
+        // ❌ Remove item from scene
+        // We use a tiny delay to ensure the Manager processes the reference before it's destroyed
+        Destroy(gameObject, 0.02f);
     }
 }
