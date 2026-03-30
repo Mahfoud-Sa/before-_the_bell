@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class SoundManager : MonoBehaviour
 {
@@ -63,6 +64,13 @@ public class SoundManager : MonoBehaviour
     {
         LoadSettings();
         ApplyMuteSettings();
+        StartCoroutine(PlayMusicWithDelay(2f)); // ✅ delay music start
+    }
+
+    // ---------- DELAYED MUSIC ----------
+    private IEnumerator PlayMusicWithDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
         PlayMusic();
     }
 
@@ -105,7 +113,7 @@ public class SoundManager : MonoBehaviour
     // ---------- MUSIC ----------
     public void PlayMusic()
     {
-        if (backgroundMusic == null) return;
+        if (backgroundMusic == null || musicSource.isPlaying) return;
 
         musicSource.clip = backgroundMusic;
         musicSource.loop = true;

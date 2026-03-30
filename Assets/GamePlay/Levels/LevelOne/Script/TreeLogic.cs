@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.Collections; // أضفنا هذا السطر لاستخدام الـ Coroutine
+using System.Collections;
 
 public class PalmBridge : MonoBehaviour
 {
@@ -7,16 +7,19 @@ public class PalmBridge : MonoBehaviour
     private bool hasFallen = false;
     private bool isPlayerTouching = false;
 
+    // 🔥 النخلة الحالية التي يلمسها اللاعب
+    public static PalmBridge currentPalm;
+
     [Header("Tool Settings")]
     public string requiredToolName = "Axe";
 
     [Header("Wood Spawn Settings")]
-    public GameObject woodLogPrefab; // اسحب بريفاب الحطب (الأزرق) هنا
-    public int woodCount = 3;        // عدد قطع الخشب التي ستظهر
-    public float delayBeforeTransform = 3f; // الوقت بالثواني قبل أن تتحول النخلة لحطب
+    public GameObject woodLogPrefab;
+    public int woodCount = 3;
+    public float delayBeforeTransform = 3f;
 
     [Header("VFX Settings")]
-    public GameObject dustEffectPrefab; // أضف هذا السطر هنا
+    public GameObject dustEffectPrefab;
 
     void Start()
     {
@@ -25,22 +28,45 @@ public class PalmBridge : MonoBehaviour
         rb.useGravity = true;
     }
 
-    void Update()
-    {
-        if (isPlayerTouching && !hasFallen)
-        {
-            if (AdvancedToolManager.currentToolName == requiredToolName)
-            {
-                StartFalling();
-            }
-        }
-    }
+   public void OnAxeButtonPressed()
+{
+     StartFalling();
+    // Debug.Log("Trying to cut tree: " + name);
+
+    // if (currentPalm != this)
+    // {
+    //     Debug.Log("Not current palm");
+    //     return;
+    // }
+
+    // if (!isPlayerTouching)
+    // {
+    //     Debug.Log("Player not touching");
+    //     return;
+    // }
+
+    // if (hasFallen)
+    // {
+    //     Debug.Log("Already fallen");
+    //     return;
+    // }
+
+    // if (AdvancedToolManager.currentToolName != requiredToolName)
+    // {
+    //     Debug.Log("Wrong tool: " + AdvancedToolManager.currentToolName);
+    //     return;
+    // }
+
+    // Debug.Log("Tree will fall now!");
+    // StartFalling();
+}
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
             isPlayerTouching = true;
+            currentPalm = this; // 🔥 تسجيل هذه النخلة كالنخلة الحالية
         }
     }
 
@@ -49,14 +75,19 @@ public class PalmBridge : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             isPlayerTouching = false;
+
+            if (currentPalm == this)
+                currentPalm = null;
         }
     }
 
     void StartFalling()
     {
         hasFallen = true;
+
         rb.isKinematic = false;
         rb.useGravity = true;
+
         rb.constraints = RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
 
         Vector3 fallAxis = Vector3.Cross(transform.forward, Vector3.up).normalized;
@@ -64,30 +95,32 @@ public class PalmBridge : MonoBehaviour
 
         Debug.Log("Tree falling... will turn to wood in " + delayBeforeTransform + " seconds");
 
-        // استدعاء وظيفة التحويل بعد وقت معين
         StartCoroutine(ConvertToWood());
     }
 
     IEnumerator ConvertToWood()
     {
-        // انتظر الوقت المحدد (مثلاً 3 ثوانٍ حتى تستقر النخلة على الأرض)
         yield return new WaitForSeconds(delayBeforeTransform);
 
-        // إنشاء قطع الحطب
+        // 🪵 إنشاء الحطب
         for (int i = 0; i < woodCount; i++)
         {
-            // نضع الخشب في نفس مكان النخلة مع رفع بسيط لكل قطعة
-            Vector3 spawnPos = transform.position + new Vector3(Random.Range(-0.5f, 0.5f), i * 0.5f, Random.Range(-0.5f, 0.5f));
+            Vector3 spawnPos = transform.position + new Vector3(
+                Random.Range(-0.5f, 0.5f),
+                i * 0.5f,
+                Random.Range(-0.5f, 0.5f)
+            );
+
             Instantiate(woodLogPrefab, spawnPos, Random.rotation);
         }
-        // إنشاء تأثير غبار في مكان النخلة عند اختفائها
+
+        // 💨 تأثير الغبار
         if (dustEffectPrefab != null)
         {
             Instantiate(dustEffectPrefab, transform.position, Quaternion.identity);
         }
 
-        // حذف النخلة من المشهد
+        // ❌ حذف النخلة
         Destroy(gameObject);
     }
-   
 }

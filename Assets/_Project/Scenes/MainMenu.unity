@@ -5116,7 +5116,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2933039629056133833, guid: 39f67f60278b3d944bbb3d37318b13f7, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4725356877513154571, guid: 39f67f60278b3d944bbb3d37318b13f7, type: 3}
       propertyPath: postProcessVolume
