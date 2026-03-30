@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     private bool isSettingsOpen = false;
 
     [Header("Timer")]
-    public float gameTime = 60f;
+    public float gameTime = 390f;
     private float currentTime;
     private bool gameEnded = false;
 
@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
         if (gameEnded)
             return;
 
-        currentTime -= Time.deltaTime;
+        currentTime += Time.deltaTime;
 
         if (currentTime <= 0f)
         {
