@@ -9,6 +9,7 @@ public class GoatTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             goat.SetPlayerTouching(true);
+            SoundManager.Instance.PlayGoat();
         }
     }
 

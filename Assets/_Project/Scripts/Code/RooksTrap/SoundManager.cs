@@ -18,16 +18,14 @@ public class SoundManager : MonoBehaviour
     [Header("River")]
     public AudioClip riverSound;
 
-    [Header("Gots")]
-    public AudioClip gotsSound;
+    [Header("Goat")]
+    public AudioClip goatSound;
 
-    [Header("Win")]
+    [Header("Win/Lose")]
     public AudioClip winSound;
-
-    [Header("Lose")]
     public AudioClip loseSound;
 
-    [Header("Bell Sound")]
+    [Header("Bell")]
     public AudioClip bellSound;
 
     [Header("Player Sounds")]
@@ -68,7 +66,7 @@ public class SoundManager : MonoBehaviour
         PlayMusic();
     }
 
-    // ---------- LOAD ----------
+    // ---------- LOAD SETTINGS ----------
     void LoadSettings()
     {
         isMusicMuted = PlayerPrefs.GetInt("MusicMuted", 0) == 1;
@@ -78,7 +76,6 @@ public class SoundManager : MonoBehaviour
     void ApplyMuteSettings()
     {
         musicSource.mute = isMusicMuted;
-
         sfxSource.mute = isSFXMuted;
         loopSource.mute = isSFXMuted;
         playerSource.mute = isSFXMuted;
@@ -95,20 +92,13 @@ public class SoundManager : MonoBehaviour
     {
         isMusicMuted = !isMusicMuted;
         musicSource.mute = isMusicMuted;
-
         PlayerPrefs.SetInt("MusicMuted", isMusicMuted ? 1 : 0);
     }
 
     public void ToggleSFX()
     {
         isSFXMuted = !isSFXMuted;
-
-        sfxSource.mute = isSFXMuted;
-        loopSource.mute = isSFXMuted;
-        playerSource.mute = isSFXMuted;
-        rockSource.mute = isSFXMuted;
-        riverSource.mute = isSFXMuted;
-
+        ApplyMuteSettings();
         PlayerPrefs.SetInt("SFXMuted", isSFXMuted ? 1 : 0);
     }
 
@@ -181,17 +171,16 @@ public class SoundManager : MonoBehaviour
     public void PlayBigRock() => PlaySFX(bigRockImpact);
     public void PlayAfterFallingStones() => PlayRiverSounds(afterFallingStone);
 
-    // 🎯 UPDATED COIN SOUND (WITH PITCH VARIATION)
     public void PlayCoin()
     {
         if (coinPickupSound == null || isSFXMuted) return;
 
-        sfxSource.pitch = Random.Range(0.9f, 1.1f); // variation
+        sfxSource.pitch = Random.Range(0.9f, 1.1f);
         sfxSource.PlayOneShot(coinPickupSound);
-        sfxSource.pitch = 1f; // reset
+        sfxSource.pitch = 1f;
     }
 
-    public void PlayGotsSound() => PlaySFX(gotsSound);
+    public void PlayGoat() => PlaySFX(goatSound);
 
     public void PlayRiverSound() => PlayRiverSounds(riverSound);
     public void StopRiverSound() => StopRiverSource();
