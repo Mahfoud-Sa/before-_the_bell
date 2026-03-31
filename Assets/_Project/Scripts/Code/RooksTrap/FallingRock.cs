@@ -10,7 +10,7 @@ public class FallingRock : MonoBehaviour
     public bool isBigRock = false;
     [Header("Coins on landing")]
     public GameObject coinPrefab;          // assign coin prefab in inspector (can be null)
-    public int coinsOnLanding = 0;         // عدد العملات التي تُولّد عند الهبوط
+    public int coinsOnLanding = 1;         // عدد العملات التي تُولّد عند الهبوط
     public float coinSpawnRadius = 0.6f;   // تشتت عملات عند الظهور
     public float coinLifetime = 12f;       // وقت بقاء العملة إذا لم تُجمع
 

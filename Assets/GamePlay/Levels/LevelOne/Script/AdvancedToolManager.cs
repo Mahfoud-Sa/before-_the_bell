@@ -8,7 +8,7 @@ public class AdvancedToolManager : MonoBehaviour
     public Sprite fullGardelSprite;
     public Canvas toolsPanelCanvas;
     public GraphicRaycaster toolsPanelRaycaster;
-
+    public Vector2 toolSize = new Vector2(70f, 70f); 
     public Button openButton;
     public Button closeButton;
 
@@ -29,6 +29,7 @@ public class AdvancedToolManager : MonoBehaviour
 
     private void Start()
     {
+
         openButton.onClick.AddListener(OpenPanel);
         closeButton.onClick.AddListener(ClosePanel);
 
@@ -37,11 +38,22 @@ public class AdvancedToolManager : MonoBehaviour
             int index = i;
             toolButtons[i].onClick.AddListener(() => SelectTool(index));
         }
-
+        SetToolsSize();
         ClosePanel();
         DeselectAllTools();
     }
+    void SetToolsSize()
+    {
+        for (int i = 0; i < toolButtons.Length; i++)
+        {
+            RectTransform rect = toolButtons[i].GetComponent<RectTransform>();
 
+            if (rect != null)
+            {
+                rect.sizeDelta = toolSize;
+            }
+        }
+    }
     private void OpenPanel()
     {
         if (toolsPanelCanvas != null) toolsPanelCanvas.enabled = true;
@@ -134,6 +146,14 @@ public class AdvancedToolManager : MonoBehaviour
     {
         isGardelFull = false;
         currentToolName = "EmptyGardel";
+
+        // 👇 تغيير الشكل في يد اللاعب
+        if (currentSelectedToolIndex >= 0 && activeToolRenderer != null)
+        {
+            activeToolRenderer.sprite = toolSprites[currentSelectedToolIndex];
+        }
+
+        Debug.Log("تم تفريغ الدلو 🪣");
     }
 
     public void DeselectAllTools()

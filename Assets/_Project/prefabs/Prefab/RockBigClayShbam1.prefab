@@ -158,7 +158,7 @@ MonoBehaviour:
     m_Bits: 128
   dustPrefab: {fileID: 9080140021571130472, guid: 37eb9b86e7f0ea14cad96b9324956670, type: 3}
   isBigRock: 1
-  coinPrefab: {fileID: 3491449334708317365, guid: f5ead24d2f280d848b87918c141d03cc, type: 3}
+  coinPrefab: {fileID: 1456526842681579105, guid: 815589bbbb04ac34d844bda90c1877b5, type: 3}
   coinsOnLanding: 1
   coinSpawnRadius: 0
   coinLifetime: 20

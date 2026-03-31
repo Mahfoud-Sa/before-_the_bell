@@ -6,6 +6,7 @@ public class PalmBridge : MonoBehaviour
     private Rigidbody rb;
     private bool hasFallen = false;
     private bool isPlayerTouching = false;
+    private bool isBridge = false;
 
     // 🔥 النخلة الحالية التي يلمسها اللاعب
     public static PalmBridge currentPalm;
@@ -81,21 +82,111 @@ public class PalmBridge : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (hasFallen && !isBridge)
+        {
+            if (other.GetComponent<MudAreaZoneScript>() != null || other.GetComponent<MudAreaScript>() != null)
+            {
+                BecomeBridge(other);
+            }
+        }
+    }
+
+    void BecomeBridge(Collider mudCollider)
+    {
+        isBridge = true;
+        
+        // Stop the wood transformation
+        StopAllCoroutines();
+
+        // Freeze physics
+        rb.isKinematic = true;
+
+        // Disable the mud trigger so the player can walk freely over the bridge
+        mudCollider.enabled = false;
+
+        Debug.Log("🌴 Tree became a bridge over the mud!");
+    }
+
     void StartFalling()
     {
         hasFallen = true;
 
-        rb.isKinematic = false;
-        rb.useGravity = true;
+        // تعطيل الفيزياء العادية لأننا سنجعلها تسقط برمجياً لضمان الدقة
+        rb.isKinematic = true;
+        rb.useGravity = false;
 
-        rb.constraints = RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+        // تحديد جهة السقوط
+        float torqueDir = -1f; // سالب = لليمين، موجب = لليسار
 
-        Vector3 fallAxis = Vector3.Cross(transform.forward, Vector3.up).normalized;
-        rb.AddTorque(fallAxis * 30f, ForceMode.Impulse);
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            if (player.transform.position.x > transform.position.x)
+                torqueDir = 1f; // تسقط لليسار بعيداً عن اللاعب
+            else
+                torqueDir = -1f; // تسقط لليمين
+        }
 
-        Debug.Log("Tree falling... will turn to wood in " + delayBeforeTransform + " seconds");
+        Debug.Log("Tree falling...");
 
-        StartCoroutine(ConvertToWood());
+        StartCoroutine(FallAnimation(torqueDir));
+    }
+
+    IEnumerator FallAnimation(float dir)
+    {
+        float duration = 1.0f;
+        float elapsed = 0f;
+        
+        // نقطة الارتكاز (Pivot) هي أسفل النخلة لتسقط كأنها مقطوعة فعلياً
+        Collider coll = GetComponent<Collider>();
+        Vector3 pivot = transform.position;
+        if (coll != null)
+        {
+            pivot = transform.position - new Vector3(0, coll.bounds.extents.y, 0);
+        }
+        
+        // الإزاحة المطلوبة لكي تبعد عن الجذع المقطوع وتسقط على مستوى الأرض بشكل مريح
+        // (dir سالب يعني لليمين، موجب म्हणजे لليسار) فا نستخدم -dir لندفعها بنفس الاتجاه
+        Vector3 detachOffset = new Vector3(-dir * 1.5f, -0.6f, 0f);
+
+        while (elapsed < duration)
+        {
+            float t = Time.deltaTime / duration;
+            float step = 90f * t;
+            
+            transform.RotateAround(pivot, Vector3.forward * dir, step);
+
+            // الانزلاق تدريجياً لتبعد عن الجذع وتنزل على الأرض
+            transform.position += detachOffset * t;
+            pivot += detachOffset * t; // تحديث الارتكاز حتى يستمر الدوران بسلاسة
+            
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        // فحص ما إذا كانت الشجرة بعد سقوطها تلامس منطقة وحل
+        bool hitMud = false;
+        if (coll != null)
+        {
+            Collider[] hits = Physics.OverlapBox(coll.bounds.center, coll.bounds.extents + Vector3.one * 0.1f);
+            foreach (var hit in hits)
+            {
+                if (hit.GetComponent<MudAreaZoneScript>() != null || hit.GetComponent<MudAreaScript>() != null)
+                {
+                    BecomeBridge(hit);
+                    hitMud = true;
+                    break;
+                }
+            }
+        }
+
+        // إذا لم تلامس الوحلة، تتحول إلى خشب
+        if (!hitMud)
+        {
+            StartCoroutine(ConvertToWood());
+        }
     }
 
     IEnumerator ConvertToWood()

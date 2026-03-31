@@ -5,33 +5,50 @@ public class CheckpointManager : MonoBehaviour
 {
     public static CheckpointManager Instance;
 
-    [Header("Player Reference (يمكن ملؤها يدوياً أو يستخدم البحث التلقائي بالـ Tag 'Player')")]
-    public Transform player;          // سحب الـ Player Transform في الـ Inspector أو يتم العثور عليه تلقائياً
+    [Header("Player Reference")]
+    public Transform player;
     public Rigidbody playerRb;
 
     [Header("Blink Settings")]
     public int blinkCount = 3;
     public float blinkInterval = 0.15f;
 
+    [Header("Checkpoints")]
     public Transform currentCheckpoint;
     public Transform startCheckpoint;
 
     private void Awake()
     {
-        // singleton بسيط
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
-        
     }
 
     private void Start()
     {
-        // محاولة تلقائية لإيجاد اللاعب إذا لم يكن مرتبطاً في الـ Inspector
-        SoundManager.Instance.PlayBellSound();
-        //AutoAssignPlayerIfMissing();
-        if (currentCheckpoint == null) player.position = startCheckpoint.position;
-        if (currentCheckpoint != null)
-            player.position = currentCheckpoint.position;
+        AutoAssignPlayerIfMissing();
+
+        if (player == null)
+        {
+            Debug.LogError("[CheckpointManager] Player not found!");
+            return;
+        }
+
+        // Choose spawn point
+        Transform spawnPoint = currentCheckpoint != null ? currentCheckpoint : startCheckpoint;
+
+        if (spawnPoint != null)
+        {
+            if (playerRb != null)
+                playerRb.position = spawnPoint.position;
+            else
+                player.position = spawnPoint.position;
+        }
+        else
+        {
+            Debug.LogWarning("[CheckpointManager] No startCheckpoint assigned!");
+        }
+
+        SoundManager.Instance?.PlayBellSound();
     }
 
     private void AutoAssignPlayerIfMissing()
@@ -42,118 +59,111 @@ public class CheckpointManager : MonoBehaviour
             if (go != null)
             {
                 player = go.transform;
-                Debug.Log("[CheckpointManager] Auto-assigned player Transform from Tag 'Player'.");
-            }
-            else
-            {
-                Debug.LogWarning("[CheckpointManager] player is not assigned and no GameObject with tag 'Player' found in scene.");
             }
         }
 
         if (playerRb == null && player != null)
         {
-            var rb = player.GetComponent<Rigidbody>();
-            if (rb != null)
-            {
-                playerRb = rb;
-                Debug.Log("[CheckpointManager] Auto-assigned player Rigidbody.");
-            }
-            else
-            {
-                Debug.LogWarning("[CheckpointManager] playerRb not assigned and player GameObject has no Rigidbody.");
-            }
+            playerRb = player.GetComponent<Rigidbody>();
         }
     }
 
-    /// <summary>
-    /// يمكنك استدعاء هذه الدالة برمجياً بعد إنشاء اللاعب ديناميكياً
-    /// </summary>
     public void SetPlayer(Transform playerTransform, Rigidbody rb = null)
     {
         player = playerTransform;
         playerRb = rb ?? playerTransform.GetComponent<Rigidbody>();
-        Debug.Log("[CheckpointManager] Player manually set via SetPlayer().");
     }
 
-    // يتم استدعاؤها من Checkpoint عندما يصل اللاعب إليه
+    // Called by Checkpoint
     public void SetCheckpoint(Transform checkpointTransform)
     {
+        if (checkpointTransform == null) return;
+
         currentCheckpoint = checkpointTransform;
-        Debug.Log("[CheckpointManager] Checkpoint Saved: " + (checkpointTransform ? checkpointTransform.name : "null"));
+
+        Debug.Log("[CheckpointManager] Checkpoint Saved: " + checkpointTransform.name);
+
+        // Optional save system
+        PlayerPrefs.SetString("LastCheckpoint", checkpointTransform.name);
     }
 
-    // استدعِ هذه الدالة عندما تريد إعادة اللاعب
     public void Respawn()
     {
         if (GameManager.Instance != null)
         {
-            if (GameManager.Instance.currentStars ==2)
-            { 
-                GameManager.Instance.LoseStar();              
+            if (GameManager.Instance.currentStars == 2)
+            {
+                GameManager.Instance.LoseStar();
             }
-        }
-       
-        if (currentCheckpoint == null)
-        {
-            Debug.LogWarning("[CheckpointManager] Respawn called but no checkpoint set.");
-            return;
         }
 
         if (player == null)
         {
-            // محاولة اعادة الاكتشاف مرة أخرى قبل الرفض النهائي
             AutoAssignPlayerIfMissing();
             if (player == null)
             {
-                Debug.LogError("[CheckpointManager] Respawn aborted: player reference is null. Assign player in Inspector or set tag 'Player'.");
+                Debug.LogError("[CheckpointManager] No player found!");
+                return;
+            }
+        }
+
+        // fallback to start
+        if (currentCheckpoint == null)
+        {
+            if (startCheckpoint != null)
+                currentCheckpoint = startCheckpoint;
+            else
+            {
+                Debug.LogError("[CheckpointManager] No checkpoint available!");
                 return;
             }
         }
 
         StartCoroutine(BlinkThenRespawn());
-        SoundManager.Instance.PlayBellSound();
+        SoundManager.Instance?.PlayBellSound();
     }
 
     private IEnumerator BlinkThenRespawn()
     {
-        // احصل على جميع SpriteRenderers تحت اللاعب (تحقق من عدم كون player null)
-        SpriteRenderer[] renderers = player != null ? player.GetComponentsInChildren<SpriteRenderer>(true) : null;
+        SpriteRenderer[] renderers = player.GetComponentsInChildren<SpriteRenderer>(true);
 
-        if (renderers == null || renderers.Length == 0)
-        {
-            Debug.LogWarning("[CheckpointManager] No SpriteRenderers found under player; Blink will be simulated by waiting.");
-            // ننتظر مدة الوميض الكاملة بدلاً من التبديل
-            float total = blinkCount * blinkInterval * 2f;
-            yield return new WaitForSeconds(total);
-        }
-        else
+        if (renderers.Length > 0)
         {
             for (int i = 0; i < blinkCount; i++)
             {
-                foreach (var r in renderers) if (r != null) r.enabled = false;
+                SetRenderers(renderers, false);
                 yield return new WaitForSeconds(blinkInterval);
-                foreach (var r in renderers) if (r != null) r.enabled = true;
+
+                SetRenderers(renderers, true);
                 yield return new WaitForSeconds(blinkInterval);
             }
         }
+        else
+        {
+            yield return new WaitForSeconds(blinkCount * blinkInterval * 2f);
+        }
 
-        // الآن نوقف حركة اللاعب وننقله بأمان
+        // Move player safely
         if (playerRb != null)
         {
             playerRb.linearVelocity = Vector3.zero;
             playerRb.angularVelocity = Vector3.zero;
-
-            // نضمن النقل بالتنسيق مع فيزياء Rigidbody
-            player.position = currentCheckpoint.position;
-           
-            playerRb.MovePosition(currentCheckpoint.position);
+            playerRb.position = currentCheckpoint.position;
         }
         else
         {
-            // لا يوجد Rigidbody: ننقل الـ Transform مباشرة
             player.position = currentCheckpoint.position;
         }
 
-        Debug.Log("[CheckpointManager] Player respawned to checkpoint: " + currentCheckpoint.name);
+        Debug.Log("[CheckpointManager] Respawned at: " + currentCheckpoint.name);
+    }
+
+    private void SetRenderers(SpriteRenderer[] renderers, bool state)
+    {
+        foreach (var r in renderers)
+        {
+            if (r != null)
+                r.enabled = state;
+        }
     }
 }
